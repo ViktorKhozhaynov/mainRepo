@@ -1,0 +1,24 @@
+.entry-point {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+}
+
+.basic-container {
+    margin: 1px;
+    border: 1px solid #DAE8EA;
+    height: calc(100% - 2px);
+}
+
+.tools-container {
+    flex-basis: 300px;
+}
+
+.dashboard-container {
+    flex-basis: calc(100% - 300px);
+}
