@@ -1,0 +1,17 @@
+.tools {
+    height: 100%;
+    width: 100%;
+}
+
+.tools-footer {
+    height: 120px;
+    background-color: #E4E8E8;
+    border-bottom: 5px solid #D1D3D3;
+}
+
+.tools-inner {
+    width: 100%;
+    height: calc(100% - 120px);
+    background-color: #D9DBDB;
+    
+}

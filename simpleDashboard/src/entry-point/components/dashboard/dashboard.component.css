@@ -1,0 +1,17 @@
+.dashboard {
+    height: 100%;
+}
+
+.dashboard > * {
+    width: 100%;
+}
+
+.month-picker-container {
+    height: 120px;
+    border-bottom: 5px solid #E1E9EA;
+}
+
+.day-management-container {
+    height: calc(100% - 120px);
+    background-color: #EAF2F3;
+}

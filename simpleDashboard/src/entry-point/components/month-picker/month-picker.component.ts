@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./month-picker.component.css']
 })
 export class MonthPickerComponent implements OnInit {
+  private backPng = 'images/back.png';
+  private forwardPng = 'images/forward.png';
 
   constructor() { }
 
