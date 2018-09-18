@@ -1,0 +1,5 @@
+{
+  "driver": "CHROME",
+  "base-portal-url": "http://automationpractice.com/index.php",
+  "headless": "false"
+}
