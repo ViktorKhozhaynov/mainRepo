@@ -1,17 +1,16 @@
 package Selenium.Common.TestEntities;
 
 import Selenium.Common.Configs.Configuration;
-import Selenium.Common.Configs.LocalRegistry;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.function.Predicate;
 
 public class TestBase extends DriverBase {
     protected static final Configuration config = Configuration.getInstance();
-    protected static final LocalRegistry localRegistry = LocalRegistry.getInstance();
+    private static final String basePortalUrl = config.getValue("basePortalUrl");
 
     private static void Initialize() {
-        webDriver().navigate().to(config.getValue("basePortalUrl"));
+        NavigateToBaseUrl();
     }
 
     public static void TestCase(String description, TestCodeBlock testBody) throws Exception {
@@ -26,5 +25,9 @@ public class TestBase extends DriverBase {
 
     public static void waitUntil(Predicate condition) {
         new WebDriverWait(webDriver(), Integer.parseInt(config.getValue("explicitTimeout"))).until(x -> condition);
+    }
+
+    public static void NavigateToBaseUrl() {
+        webDriver().navigate().to(basePortalUrl);
     }
 }

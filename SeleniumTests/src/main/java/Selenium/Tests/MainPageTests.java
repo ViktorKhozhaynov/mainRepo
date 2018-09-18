@@ -1,6 +1,5 @@
 package Selenium.Tests;
 
-import Selenium.Common.Configs.Configuration;
 import Selenium.Common.TestCategories.Smoke;
 import Selenium.Common.TestEntities.TestBase;
 import Selenium.PageObject.MainPortal;

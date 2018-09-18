@@ -1,4 +1,5 @@
 package Selenium.Common.Boot;
+
 import Selenium.Common.Configs.Configuration;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
