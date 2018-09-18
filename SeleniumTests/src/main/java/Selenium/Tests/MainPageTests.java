@@ -7,10 +7,8 @@ import Selenium.PageObject.MainPortal;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openqa.selenium.By;
 
 public class MainPageTests extends TestBase {
-    private static final Configuration config = Configuration.getInstance();
     protected final MainPortal MainPortal = new MainPortal(webDriver());
 
     @Test
@@ -26,7 +24,7 @@ public class MainPageTests extends TestBase {
                 waitUntil(x -> MainPortal.Header.TopMenuRow.WomenHoverable.IsDisplayed());
 
                 var tmp1 = womenLink.Text();
-                Assert.assertEquals("'Women' link text mismatch!", expectedLinkText, womenLink.Text());
+                Assert.assertEquals("'WOMEN' link text mismatch!", expectedLinkText.toUpperCase(), womenLink.Text());
 
                 womenLink.Click();
             });
