@@ -2,5 +2,6 @@
   "driver": "CHROME",
   "basePortalUrl": "http://automationpractice.com/index.php",
   "headless": "false",
-  "implicitTimeout": 60
+  "implicitTimeout": 60,
+  "explicitTimeout": 60
 }

@@ -1,7 +1,7 @@
 package Selenium.PageObject;
 
 import Selenium.Common.PageEntities.MainPage;
-import Selenium.PageObject.Header.Header;
+import Selenium.PageObject.Boxes.Header;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

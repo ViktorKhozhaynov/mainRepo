@@ -1,4 +1,4 @@
-package Selenium.Common.PageEntities;
+package Selenium.Common.ElementEntities;
 
 import Selenium.Common.Helpers.CustomImplicitTimeout;
 import org.apache.logging.log4j.LogManager;
@@ -6,11 +6,15 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.internal.WrapsDriver;
+
+import java.util.function.Supplier;
 
 public class HtmlSection {
     protected final int QUICK_SEARCH_TIMEOUT = 2;
-    private Logger log = LogManager.getFormatterLogger(this.getClass().getName());
+    protected Logger log = LogManager.getFormatterLogger(this.getClass().getName());
     private WebDriver webDriver;
+    private Supplier<WebElement> webElement;
     private By by;
 
     private HtmlSection() {}
@@ -20,12 +24,25 @@ public class HtmlSection {
         this.by = by;
     }
 
+    public HtmlSection(Supplier<WebElement> webElement, By by) {
+        this.webElement = webElement;
+        this.by = by;
+    }
+
     public WebElement WebElement() {
-        return by != null ? webDriver.findElement(by) : webDriver.findElement(By.xpath(".//"));
+        return by != null && webElement != null
+                ? webElement.get().findElement(by)
+                : by != null
+                    ? webDriver.findElement(by)
+                    : webDriver.findElement(By.xpath(".//"));
+    }
+
+    public WebDriver WebDriver() {
+        return webDriver != null ? webDriver : ((WrapsDriver) webElement.get()).getWrappedDriver();
     }
 
     public String Text() {
-        try (var ignored = new CustomImplicitTimeout(webDriver, QUICK_SEARCH_TIMEOUT)) {
+        try (var ignored = new CustomImplicitTimeout(WebDriver(), QUICK_SEARCH_TIMEOUT)) {
             return WebElement().getText();
         } catch (Exception ex) {
             log.error("Error has occurred during an attempt to get the text of the element! Message: %s", ex.getMessage());

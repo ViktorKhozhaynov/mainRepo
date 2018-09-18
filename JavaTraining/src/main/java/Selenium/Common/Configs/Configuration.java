@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
 public class Configuration {
-    private static final String CONFIG_PATH = "src/main/java/com/company/Selenium/config.json";
+    private static final String CONFIG_FILE_NAME = "config.json";
 
     private static final Logger log = LogManager.getFormatterLogger(Configuration.class.getName());
     private static JSONObject _jsonObject;
@@ -17,8 +17,11 @@ public class Configuration {
 
     private Configuration() {
         try {
-            log.debug("Trying to parse configuration from %s", CONFIG_PATH);
-            _jsonObject = (JSONObject) new JSONParser().parse(new InputStreamReader(new FileInputStream(CONFIG_PATH)));
+            ClassLoader classLoader = getClass().getClassLoader();
+            String configFilePath = classLoader.getResource(CONFIG_FILE_NAME).getFile();
+
+            log.debug("Trying to parse configuration from %s", configFilePath);
+            _jsonObject = (JSONObject) new JSONParser().parse(new InputStreamReader(new FileInputStream(configFilePath)));
             log.debug("Parsing process has finished successfully!");
         } catch (Exception ex) {
             log.error("Parse Error has occurred during configuration parsing!");
@@ -27,7 +30,7 @@ public class Configuration {
     }
 
     public String getValue(String key){
-        return (String) _jsonObject.get(key);
+        return  _jsonObject.get(key).toString();
     }
 
     public static Configuration getInstance() {

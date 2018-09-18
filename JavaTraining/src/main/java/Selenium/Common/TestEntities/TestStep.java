@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 public class TestStep {
     private static final Logger log = LogManager.getFormatterLogger(TestStep.class.getName());
 
-    public static void TestStep(String description, Runnable testStepBody) {
+    public static void TestStep(String description, TestCodeBlock testStepBody) throws Exception {
         Stopwatch stopwatch = Stopwatch.createStarted();
         log.info("'%s' has started!", description);
         try {
@@ -15,6 +15,8 @@ public class TestStep {
         } catch (Exception ex) {
             log.info("'%s' has finished with an exception! Elapsed %d milliseconds", description, stopwatch.elapsed().toMillis());
             log.error("Error message: ", ex.getMessage());
+
+            throw ex;
         } finally {
             log.info("'%s' has finished successfully! Elapsed %d milliseconds", description, stopwatch.elapsed().toMillis());
         }

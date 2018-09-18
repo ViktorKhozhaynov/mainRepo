@@ -14,52 +14,35 @@ import java.util.*;
 public class DriverBase {
     private static List<DriverFactory> webDriverThreadPool = Collections.synchronizedList(new ArrayList<DriverFactory>());
     private static ThreadLocal<DriverFactory> driverFactoryThread;
-    protected List<Runnable> preInstructions = new LinkedList<>();
-    protected List<Runnable> postInstructions = new LinkedList<>();
     protected final Logger log = LogManager.getFormatterLogger(this.getClass().getName());
 
-    protected DriverBase() {
-        preInstructions.add(() -> {
-            System.out.println("Starting the driver...");
-            driverFactoryThread = ThreadLocal.withInitial(() -> {
-                DriverFactory driverFactory = new DriverFactory();
-                webDriverThreadPool.add(driverFactory);
-                return driverFactory;
-            });
-        });
-        postInstructions.add(() -> {
-            try {
-                driverFactoryThread.get().getStoredDriver().manage().deleteAllCookies();
-            } catch (Exception ignored) {
-                System.out.println("Unable to clear cookies, driver object is not viable...");
-            }
-        });
-        postInstructions.add(() -> {
-            for (DriverFactory driverFactory : webDriverThreadPool) {
-                driverFactory.quitDriver();
-            }
-        });
-    }
-
     @BeforeClass
-    public static void runBeforeClassInstructions() {
+    public static void createDriverViaFactory() {
+        System.out.println("Starting the driver...");
+        driverFactoryThread = ThreadLocal.withInitial(() -> {
+            DriverFactory driverFactory = new DriverFactory();
+            webDriverThreadPool.add(driverFactory);
+            return driverFactory;
+        });
     }
 
     @AfterClass
-    public static void runAfterClassInstructions() {
+    public static void clearAllCookies() {
+        try {
+            driverFactoryThread.get().getStoredDriver().manage().deleteAllCookies();
+        } catch (Exception ignored) {
+            System.out.println("Unable to clear cookies, driver object is not viable...");
+        }
     }
 
-    @Before
-    public void runBeforeInstructions() {
-        preInstructions.forEach(Runnable::run);
+    @AfterClass
+    public static void quitDriver() {
+        for (DriverFactory driverFactory : webDriverThreadPool) {
+            driverFactory.quitDriver();
+        }
     }
 
-    @After
-    public void runAfterInstructions() {
-        postInstructions.forEach(Runnable::run);
-    }
-
-    public static RemoteWebDriver getDriver() {
+    public static RemoteWebDriver webDriver() {
         return driverFactoryThread.get().getDriver();
     }
 }
