@@ -1,6 +1,6 @@
 package Selenium.Tests;
 
-import Selenium.Common.TestCategories.Smoke;
+import Selenium.Common.TestEntities.TestCategories.Smoke;
 import Selenium.Common.TestEntities.TestBase;
 import Selenium.PageObject.MainPortal;
 import org.junit.Assert;
@@ -22,7 +22,6 @@ public class MainPageTests extends TestBase {
                 waitUntil(x -> MainPortal.Header.TopMenuRow.IsDisplayed());
                 waitUntil(x -> MainPortal.Header.TopMenuRow.WomenHoverable.IsDisplayed());
 
-                var tmp1 = womenLink.Text();
                 Assert.assertEquals("'WOMEN' link text mismatch!", expectedLinkText.toUpperCase(), womenLink.Text());
 
                 womenLink.Click();

@@ -1,4 +1,4 @@
-package Selenium.Common.ElementEntities;
+package Selenium.Common.HtmlEntities;
 
 import Selenium.Common.Helpers.CustomImplicitTimeout;
 import org.apache.logging.log4j.LogManager;
