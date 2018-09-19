@@ -9,16 +9,16 @@ public class TestStep {
 
     public static void TestStep(String description, TestCodeBlock testStepBody) throws Exception {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        log.info("'%s' has started!", description);
+        log.info("Started:  '%s'.", description);
         try {
             testStepBody.run();
         } catch (Exception ex) {
-            log.info("'%s' has finished with an exception! Elapsed %d milliseconds", description, stopwatch.elapsed().toMillis());
+            log.info("Error: '%s'. Elapsed %d ms", description, stopwatch.elapsed().toMillis());
             log.error("Error message: ", ex.getMessage());
 
             throw ex;
         } finally {
-            log.info("'%s' has finished successfully! Elapsed %d milliseconds", description, stopwatch.elapsed().toMillis());
+            log.info("Finished: '%s'. Elapsed %d ms", description, stopwatch.elapsed().toMillis());
         }
     }
 }
