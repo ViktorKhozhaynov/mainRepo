@@ -3,9 +3,9 @@ package Selenium.Common.TestEntities;
 import Selenium.Common.Boot.DriverFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.*;
@@ -15,7 +15,7 @@ public class DriverBase {
     private static ThreadLocal<DriverFactory> driverFactoryThread;
     protected final Logger log = LogManager.getFormatterLogger(this.getClass().getName());
 
-    @BeforeClass
+    @BeforeAll
     public static void createDriverViaFactory() {
         System.out.println("Starting the driver...");
         driverFactoryThread = ThreadLocal.withInitial(() -> {
@@ -25,14 +25,14 @@ public class DriverBase {
         });
     }
 
-    @AfterClass
+    @AfterAll
     public static void quitDriver() {
         for (DriverFactory driverFactory : webDriverThreadPool) {
             driverFactory.quitDriver();
         }
     }
 
-    @After
+    @AfterEach
     public void clearAllCookies() {
         try {
             driverFactoryThread.get().getStoredDriver().manage().deleteAllCookies();
