@@ -10,7 +10,7 @@ public class TestBase extends DriverBase {
     private static final String basePortalUrl = config.getValue("basePortalUrl");
 
     private static void Initialize() {
-        NavigateToBaseUrl();
+        /* Stuff you do before tests start */
     }
 
     public static void TestCase(String description, TestCodeBlock testBody) throws Exception {

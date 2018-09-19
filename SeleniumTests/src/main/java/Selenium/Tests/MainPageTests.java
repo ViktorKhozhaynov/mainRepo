@@ -17,10 +17,12 @@ public class MainPageTests extends TestBase {
             var expectedLinkText = "Women";
             var womenLink = MainPortal.Header.TopMenuRow.WomenHoverable;
 
+            TestStep("Open main page", TestBase::NavigateToBaseUrl);
+
             TestStep("Wait until the link is displayed and check the text", () -> {
-                waitUntil(x -> MainPortal.Header.IsDisplayed());
-                waitUntil(x -> MainPortal.Header.TopMenuRow.IsDisplayed());
-                waitUntil(x -> MainPortal.Header.TopMenuRow.WomenHoverable.IsDisplayed());
+                //waitUntil(x -> MainPortal.Header.IsDisplayed());
+                //waitUntil(x -> MainPortal.Header.TopMenuRow.IsDisplayed());
+                //waitUntil(x -> MainPortal.Header.TopMenuRow.WomenHoverable.IsDisplayed());
 
                 Assert.assertEquals("'WOMEN' link text mismatch!", expectedLinkText.toUpperCase(), womenLink.Text());
 
