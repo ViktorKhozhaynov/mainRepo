@@ -1,4 +1,4 @@
-package Selenium.Common.ElementEntities;
+package Selenium.Common.HtmlEntities;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

@@ -1,7 +1,7 @@
 package Selenium.PageObject.Rows;
 
-import Selenium.Common.ElementEntities.HtmlElement;
-import Selenium.Common.ElementEntities.HtmlSection;
+import Selenium.Common.HtmlEntities.HtmlElement;
+import Selenium.Common.HtmlEntities.HtmlSection;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

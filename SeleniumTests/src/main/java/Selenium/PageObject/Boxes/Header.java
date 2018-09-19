@@ -1,6 +1,6 @@
 package Selenium.PageObject.Boxes;
 
-import Selenium.Common.ElementEntities.HtmlSection;
+import Selenium.Common.HtmlEntities.HtmlSection;
 import Selenium.PageObject.Rows.TopMenuRow;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

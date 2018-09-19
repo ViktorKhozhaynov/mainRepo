@@ -1,7 +1,6 @@
 package Selenium.Tests;
 
-import Selenium.Common.Configs.Configuration;
-import Selenium.Common.TestCategories.Smoke;
+import Selenium.Common.TestEntities.TestCategories.Smoke;
 import Selenium.Common.TestEntities.TestBase;
 import Selenium.PageObject.MainPortal;
 import org.junit.Assert;
@@ -18,12 +17,13 @@ public class MainPageTests extends TestBase {
             var expectedLinkText = "Women";
             var womenLink = MainPortal.Header.TopMenuRow.WomenHoverable;
 
-            TestStep("Wait until the link is displayed and check the text", () -> {
-                waitUntil(x -> MainPortal.Header.IsDisplayed());
-                waitUntil(x -> MainPortal.Header.TopMenuRow.IsDisplayed());
-                waitUntil(x -> MainPortal.Header.TopMenuRow.WomenHoverable.IsDisplayed());
+            TestStep("Open main page", TestBase::NavigateToBaseUrl);
 
-                var tmp1 = womenLink.Text();
+            TestStep("Wait until the link is displayed and check the text", () -> {
+                //waitUntil(x -> MainPortal.Header.IsDisplayed());
+                //waitUntil(x -> MainPortal.Header.TopMenuRow.IsDisplayed());
+                //waitUntil(x -> MainPortal.Header.TopMenuRow.WomenHoverable.IsDisplayed());
+
                 Assert.assertEquals("'WOMEN' link text mismatch!", expectedLinkText.toUpperCase(), womenLink.Text());
 
                 womenLink.Click();
