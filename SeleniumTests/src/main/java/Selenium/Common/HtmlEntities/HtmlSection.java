@@ -29,7 +29,7 @@ public class HtmlSection {
         this.by = by;
     }
 
-    public WebElement WebElement() {
+    public WebElement _webElement() {
         return by != null && webElement != null
                 ? webElement.get().findElement(by)
                 : by != null
@@ -37,13 +37,21 @@ public class HtmlSection {
                     : webDriver.findElement(By.xpath(".//"));
     }
 
+    public Supplier<WebElement> WebElement() {
+        return () -> _webElement();
+    }
+
     public WebDriver WebDriver() {
         return webDriver != null ? webDriver : ((WrapsDriver) webElement.get()).getWrappedDriver();
     }
 
+    public String InternalId() {
+        return by != null ? by.toString() : "by.xpath //";
+    }
+
     public String Text() {
         try (var ignored = new CustomImplicitTimeout(WebDriver(), QUICK_SEARCH_TIMEOUT)) {
-            return WebElement().getText();
+            return _webElement().getText();
         } catch (Exception ex) {
             log.error("Error has occurred during an attempt to get the text of the element! Message: %s", ex.getMessage());
             return "";
@@ -70,10 +78,10 @@ public class HtmlSection {
     }
 
     public Boolean IsDisplayed() {
-        return WebElement().isDisplayed();
+        return _webElement().isDisplayed();
     }
 
     public Boolean IsHidden() {
-        return !WebElement().isDisplayed();
+        return !_webElement().isDisplayed();
     }
 }

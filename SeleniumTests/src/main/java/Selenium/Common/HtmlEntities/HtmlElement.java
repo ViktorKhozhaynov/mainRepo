@@ -15,9 +15,11 @@ public class HtmlElement extends HtmlSection {
         super(webElement, by);
     }
 
+    public String ExpectedText;
+
     public void Click() {
         try {
-            WebElement().click();
+            _webElement().click();
         } catch (Exception ex) {
             log.error("An error has occurred while clicking on the element! Message: %s", ex.getMessage());
         }

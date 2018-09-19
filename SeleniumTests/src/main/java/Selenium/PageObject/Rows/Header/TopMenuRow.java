@@ -1,4 +1,4 @@
-package Selenium.PageObject.Rows;
+package Selenium.PageObject.Rows.Header;
 
 import Selenium.Common.HtmlEntities.HtmlElement;
 import Selenium.Common.HtmlEntities.HtmlSection;
@@ -10,5 +10,5 @@ public class TopMenuRow extends HtmlSection {
         super(webDriver, by);
     }
 
-    public HtmlElement WomenHoverable = new HtmlElement(() -> WebElement(), By.xpath(".//a[contains(text(), 'Women')]"));
+    public HtmlElement WomenHoverable = new HtmlElement(WebElement(), By.xpath(".//a[contains(text(), 'Women')]")) {{ ExpectedText = "WOMEN"; }};
 }
