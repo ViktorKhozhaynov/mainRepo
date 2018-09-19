@@ -19,7 +19,7 @@ public class HtmlElement extends HtmlSection {
 
     public void Click() {
         try {
-            _webElement().click();
+            WebElement().get().click();
         } catch (Exception ex) {
             log.error("An error has occurred while clicking on the element! Message: %s", ex.getMessage());
         }

@@ -24,7 +24,7 @@ public class TestBase extends DriverBase {
     }
 
     public static void waitUntil(Predicate condition) {
-        new WebDriverWait(webDriver(), Integer.parseInt(config.getValue("explicitTimeout"))).until(x -> condition);
+        new WebDriverWait(webDriver(), Integer.parseInt(config.getValue("explicitTimeout"))).until(x -> condition.test(x));
     }
 
     public static void NavigateToBaseUrl() {

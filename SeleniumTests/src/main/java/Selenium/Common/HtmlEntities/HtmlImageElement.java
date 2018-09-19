@@ -21,8 +21,8 @@ public class HtmlImageElement extends HtmlElement {
     }
 
     public Optional<String> Src() {
-        try (var ignore = new CustomImplicitTimeout(WebDriver(), 2)) {
-            return Optional.of(_webElement().getAttribute("src"));
+        try (var ignore = new CustomImplicitTimeout(WebDriver(), QUICK_SEARCH_TIMEOUT)) {
+            return Optional.of(WebElement().get().getAttribute("src"));
         } catch (Exception ex) {
             log.warn("An error has occurred while getting src attribute of an IMG element! Message: %s", ex.getMessage());
         }

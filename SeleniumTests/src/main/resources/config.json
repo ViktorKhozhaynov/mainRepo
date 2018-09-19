@@ -3,5 +3,5 @@
   "basePortalUrl": "http://automationpractice.com/index.php",
   "headless": "false",
   "implicitTimeout": 60,
-  "explicitTimeout": 60
+  "explicitTimeout": 30
 }

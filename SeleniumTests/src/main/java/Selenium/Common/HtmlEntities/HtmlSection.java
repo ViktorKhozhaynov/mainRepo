@@ -4,6 +4,7 @@ import Selenium.Common.Helpers.CustomImplicitTimeout;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
@@ -29,7 +30,7 @@ public class HtmlSection {
         this.by = by;
     }
 
-    public WebElement _webElement() {
+    private WebElement _webElement() {
         return by != null && webElement != null
                 ? webElement.get().findElement(by)
                 : by != null
@@ -45,7 +46,7 @@ public class HtmlSection {
         return webDriver != null ? webDriver : ((WrapsDriver) webElement.get()).getWrappedDriver();
     }
 
-    public String InternalId() {
+    protected String InternalId() {
         return by != null ? by.toString() : "by.xpath //";
     }
 
@@ -59,29 +60,43 @@ public class HtmlSection {
     }
 
     public Boolean IsPresent() {
-        try (var ignored = new CustomImplicitTimeout(webDriver, QUICK_SEARCH_TIMEOUT)) {
-            webDriver.findElement(by);
+        try (var ignored = new CustomImplicitTimeout(WebDriver(), QUICK_SEARCH_TIMEOUT)) {
+            _webElement();
             return true;
         } catch (Exception ex) {
-            log.warn("The element hasn't been found by '$s' in the DOM!", by.toString());
+            log.warn("IsPresent: The element hasn't been found by '$s' locator in the DOM!", by.toString());
             return false;
         }
     }
 
     public Boolean IsAbsent() {
-        try (var ignored = new CustomImplicitTimeout(webDriver, QUICK_SEARCH_TIMEOUT)) {
-            return webDriver.findElements(by).size() == 0;
+        try (var ignored = new CustomImplicitTimeout(WebDriver(), QUICK_SEARCH_TIMEOUT)) {
+            int numberOfElements = webElement != null
+                    ? webElement.get().findElements(by).size()
+                    : webDriver.findElements(by).size();
+
+            return numberOfElements == 0;
         } catch (Exception ex) {
-            log.error("Error has occurred during an attempt to get the element! Message: %s", ex.getMessage());
+            log.error("IsAbsent: Error has occurred during an attempt to get the element! Message: %s", ex.getMessage());
         }
         return false;
     }
 
     public Boolean IsDisplayed() {
-        return _webElement().isDisplayed();
+        try (var ignored = new CustomImplicitTimeout(WebDriver(), QUICK_SEARCH_TIMEOUT)) {
+            return _webElement().isDisplayed();
+        } catch (NoSuchElementException ex) {
+            log.error("IsDisplayed: Error has occurred during an attempt to get the element! Message: %s", ex.getMessage());
+        }
+        return false;
     }
 
     public Boolean IsHidden() {
-        return !_webElement().isDisplayed();
+        try (var ignored = new CustomImplicitTimeout(WebDriver(), QUICK_SEARCH_TIMEOUT)) {
+            return !_webElement().isDisplayed();
+        } catch (NoSuchElementException ex) {
+            log.error("IsHidden: Error has occurred during an attempt to get the element! Message: %s", ex.getMessage());
+        }
+        return false;
     }
 }

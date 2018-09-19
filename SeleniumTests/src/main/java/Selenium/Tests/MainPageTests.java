@@ -14,18 +14,16 @@ public class MainPageTests extends TestBase {
     @Category(Smoke.class)
     public final void TestNumberOne() throws Exception {
         TestCase("Several test cases for Women link on the main page", () -> {
-            var expectedLinkText = "Women";
+            var womenLink = MainPortal.Header.TopMenuRow.WomenLink;
 
             TestStep("Open main page", TestBase::NavigateToBaseUrl);
 
-            TestStep("Wait until the link is displayed and check the text", () -> {
-                var womenLink = MainPortal.Header.TopMenuRow.WomenHoverable;
-
-                waitUntil(x -> MainPortal.Header.IsDisplayed());
-                waitUntil(x -> MainPortal.Header.TopMenuRow.IsDisplayed());
+            TestStep("Wait until the link is displayed", () -> {
                 waitUntil(x -> womenLink.IsDisplayed());
+            });
 
-                Assert.assertEquals("'WOMEN' link text mismatch!", expectedLinkText.toUpperCase(), womenLink.Text());
+            TestStep("Validate the text of the link", () -> {
+                Assert.assertEquals("'WOMEN' link text mismatch!", womenLink.ExpectedText, womenLink.Text());
 
                 womenLink.Click();
             });

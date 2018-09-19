@@ -10,5 +10,5 @@ public class TopMenuRow extends HtmlSection {
         super(webDriver, by);
     }
 
-    public HtmlElement WomenHoverable = new HtmlElement(WebElement(), By.xpath(".//a[contains(text(), 'Women')]")) {{ ExpectedText = "WOMEN"; }};
+    public HtmlElement WomenLink = new HtmlElement(WebElement(), By.xpath(".//a[contains(text(), 'Women')]")) {{ ExpectedText = "WOMEN"; }};
 }
