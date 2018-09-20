@@ -20,11 +20,11 @@ public class NavigationRow extends HtmlSection {
 
     public HtmlElement ShopPhoneIconElement = new HtmlElement(WebElement(), By.cssSelector("i.icon-phone"));
 
-    public HtmlElement ShopPhoneContainerELement = new HtmlElement(WebElement(), By.className("shop-phone"));
+    public HtmlElement ShopPhoneContainerELement = new HtmlElement(WebElement(), By.className("shop-phone")) {{ ExpectedText = "Call us now: "; }};
 
     public HtmlElement ShopPhoneElement = new HtmlElement(WebElement(), By.cssSelector("span.shop-phone strong"));
 
-    public HtmlButtonElement ContactUsButton = new HtmlButtonElement(WebElement(), By.id("contact-link"));
+    public HtmlButtonElement ContactUsButton = new HtmlButtonElement(WebElement(), By.id("contact-link")) {{ ExpectedText = "Contact us"; }};
 
-    public HtmlButtonElement SignInButton = new HtmlButtonElement(WebElement(), By.cssSelector(".login"));
+    public HtmlButtonElement SignInButton = new HtmlButtonElement(WebElement(), By.cssSelector(".login")) {{ ExpectedText= "Sign in"; }};
 }
