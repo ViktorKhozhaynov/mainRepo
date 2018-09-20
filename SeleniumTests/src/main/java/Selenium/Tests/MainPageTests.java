@@ -13,7 +13,7 @@ public class MainPageTests extends TestBase {
     @Test
     @Category(Smoke.class)
     public final void HeaderAppearanceTest() throws Exception {
-        TestCase("Several test cases for Header section located on the main page", () -> {
+        TestCase("Several test cases for Header section elements appearance", () -> {
             var header = MainPortal.Header;
             var navigationRow = header.NavigationRow;
             var shopPhone = "0123-456-789";
