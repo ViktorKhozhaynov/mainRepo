@@ -58,8 +58,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Configuration.cs" />
-    <Compile Include="Core\DriverFactory.cs" />
-    <Compile Include="Core\TestBase.cs" />
+    <Compile Include="Core\Boot\DriverFactory.cs" />
+    <Compile Include="Core\CustomImplicitTimeout.cs" />
+    <Compile Include="Core\HtmlEntities\HtmlButtonElement.cs" />
+    <Compile Include="Core\HtmlEntities\HtmlElement.cs" />
+    <Compile Include="Core\HtmlEntities\HtmlHoverableElement.cs" />
+    <Compile Include="Core\HtmlEntities\HtmlImageElement.cs" />
+    <Compile Include="Core\HtmlEntities\HtmlSection.cs" />
+    <Compile Include="Core\PageEntities\PageBase.cs" />
+    <Compile Include="Core\TestEntities\TestBase.cs" />
+    <Compile Include="Core\TestEntities\TestCaseMethods.cs" />
+    <Compile Include="Core\TestEntities\TestStepMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\YandexTests.cs" />
   </ItemGroup>
