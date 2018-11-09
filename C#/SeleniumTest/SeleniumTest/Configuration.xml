@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <driverType>Chrome</driverType>
+  <basePortalUrl>https://taxi.yandex.ru/#index</basePortalUrl>
+  <headless>false</headless>
+  <implicitTimeout>60</implicitTimeout>
+  <explicitTimeout>60</explicitTimeout>
+</configuration>
