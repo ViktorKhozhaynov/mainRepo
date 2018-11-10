@@ -11,7 +11,7 @@ namespace SeleniumTest.Core
 
         private const string configName = "Configuration.xml";
         private XmlNode config;
-        private static readonly ILog log = LogManager.GetLogger(typeof(Configuration));
+        private static readonly ILog log = LogManager.GetLogger(typeof(Configuration).Name);
 
         private Configuration()
         {

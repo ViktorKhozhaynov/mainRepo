@@ -2,7 +2,6 @@
 using log4net.Config;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using SeleniumTest.Core.TestEntities;
 using System;
 
 namespace SeleniumTest.Core
@@ -18,7 +17,7 @@ namespace SeleniumTest.Core
         protected void InitializeFixture()
         {
             XmlConfigurator.Configure();
-            logger = LogManager.GetLogger(GetType());
+            logger = LogManager.GetLogger(GetType().Name);
 
             config = Configuration.GetInstance();
         }

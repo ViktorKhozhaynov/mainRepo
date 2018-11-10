@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace SeleniumTest.Core.TestEntities
+namespace SeleniumTest.Core
 {
     public class TestCaseMethods
     {

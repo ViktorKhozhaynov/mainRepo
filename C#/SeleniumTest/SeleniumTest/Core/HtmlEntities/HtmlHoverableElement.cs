@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 
-namespace SeleniumTest.Core.HtmlEntities
+namespace SeleniumTest.Core
 {
     public class HtmlHoverableElement : HtmlElement
     {

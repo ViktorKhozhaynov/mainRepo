@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace SeleniumTest.Core.HtmlEntities
+namespace SeleniumTest.Core
 {
     public class HtmlButtonElement : HtmlElement
     {

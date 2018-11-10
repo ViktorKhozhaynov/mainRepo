@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 
-namespace SeleniumTest.Core.HtmlEntities
+namespace SeleniumTest.Core
 {
     public class HtmlImageElement : HtmlElement
     {

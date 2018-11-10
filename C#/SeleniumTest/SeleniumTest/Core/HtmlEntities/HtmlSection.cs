@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
 using System;
 
-namespace SeleniumTest.Core.HtmlEntities
+namespace SeleniumTest.Core
 {
     public class HtmlSection
     {

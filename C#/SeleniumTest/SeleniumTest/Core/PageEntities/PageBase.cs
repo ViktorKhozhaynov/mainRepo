@@ -1,7 +1,7 @@
 ﻿using log4net;
 using OpenQA.Selenium;
 
-namespace SeleniumTest.Core.PageObject
+namespace SeleniumTest.Core
 {
     public class PageBase
     {
