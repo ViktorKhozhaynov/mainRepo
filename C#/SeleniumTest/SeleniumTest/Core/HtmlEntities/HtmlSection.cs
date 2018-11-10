@@ -13,22 +13,26 @@ namespace SeleniumTest.Core
         private IWebElement _webElement;
         private By by;
 
-        private HtmlSection() { }
-
-        public HtmlSection(IWebDriver webDriver, By by)
+        private HtmlSection()
         {
-            this._webDriver = webDriver;
-            this.by = by;
-
             log = LogManager.GetLogger(this.GetType());
         }
 
-        public HtmlSection(IWebElement webElement, By by)
+        public HtmlSection(IWebDriver webDriver, By by) : this()
+        {
+            this._webDriver = webDriver;
+            this.by = by;
+        }
+
+        public HtmlSection(IWebElement webElement, By by) : this()
         {
             this._webElement = webElement;
             this.by = by;
+        }
 
-            log = LogManager.GetLogger(this.GetType());
+        public HtmlSection(IWebElement webElement) : this()
+        {
+            this._webElement = webElement;
         }
 
         public IWebElement WebElement
@@ -39,7 +43,7 @@ namespace SeleniumTest.Core
                    ? _webElement.FindElement(by)
                    : by != null
                        ? _webDriver.FindElement(by)
-                       : _webDriver.FindElement(By.XPath(".//"));
+                       : _webElement;
             }
         }
 

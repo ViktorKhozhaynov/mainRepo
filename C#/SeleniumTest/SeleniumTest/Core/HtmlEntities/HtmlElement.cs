@@ -13,6 +13,10 @@ namespace SeleniumTest.Core
         {
         }
 
+        public HtmlElement(IWebElement webElement) : base(webElement)
+        {
+        }
+
         public String ExpectedText;
 
         public void Click()

@@ -23,12 +23,7 @@ namespace SeleniumTest.Tests
             {
                 TestStep("Open the main page and wait until it loads", () =>
                 {
-                    log.Info(MainPage.MainOverlay.CallCenterPlaceholderSection.FullText);
-                    log.Info(MainPage.MainOverlay.CallCenterPlaceholderSection.PhoneElement.IsPresent);
-                    log.Info(MainPage.MainOverlay.CallCenterPlaceholderSection.PhoneElement.IsAbsent);
-                    log.Info(MainPage.MainOverlay.CallCenterPlaceholderSection.PhoneElement.IsDisplayed);
-                    log.Info(MainPage.MainOverlay.CallCenterPlaceholderSection.PhoneElement.IsHidden);
-                    log.Info(config.GetValue("driverType"));
+
                 });
             });
         }

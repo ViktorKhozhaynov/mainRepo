@@ -21,7 +21,7 @@ namespace SeleniumTest.Core
             switch (browserType)
             {
                 case DriverType.Firefox:
-                    return new FirefoxDriver();
+                    return new FirefoxDriver(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Drivers"));
 
                 case DriverType.InternetExplorer:
                     return new InternetExplorerDriver();
