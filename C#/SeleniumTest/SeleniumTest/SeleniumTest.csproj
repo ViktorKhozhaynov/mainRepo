@@ -59,7 +59,7 @@
   <ItemGroup>
     <Compile Include="Core\Configuration.cs" />
     <Compile Include="Core\Boot\DriverFactory.cs" />
-    <Compile Include="Core\CustomImplicitTimeout.cs" />
+    <Compile Include="Core\Timeouts\CustomImplicitTimeout.cs" />
     <Compile Include="Core\HtmlEntities\HtmlButtonElement.cs" />
     <Compile Include="Core\HtmlEntities\HtmlElement.cs" />
     <Compile Include="Core\HtmlEntities\HtmlHoverableElement.cs" />
@@ -72,6 +72,7 @@
     <Compile Include="Core\TestEntities\TestBase.cs" />
     <Compile Include="Core\TestEntities\TestCaseMethods.cs" />
     <Compile Include="Core\TestEntities\TestStepMethods.cs" />
+    <Compile Include="Core\Timeouts\CustomPageLoadTimeout.cs" />
     <Compile Include="PageObject\Yandex\MainPage\HeaderMenu.cs" />
     <Compile Include="PageObject\Yandex\MainPage.cs" />
     <Compile Include="PageObject\Yandex\MainPage\MainOverlay.cs" />

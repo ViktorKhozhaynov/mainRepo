@@ -31,7 +31,15 @@ namespace SeleniumTest.Core
         
         public MainPage OpenMainPage()
         {
-            NavigateToUrl(config.BaseUrl);
+            using (new CustomPageLoadTimeout(WebDriver, 5))
+                try
+                {
+                    log.Info("Main page has started loading. Waiting for 5 sec and proceed regardless of the result!");
+                    NavigateToUrl(config.BaseUrl);
+                } catch (WebDriverTimeoutException)
+                {
+                    log.Warn("Main page hasn't been loaded fully. Proceed with caution!");
+                }
 
             var mainPage = new MainPage(WebDriver, null);
 

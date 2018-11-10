@@ -7,4 +7,5 @@
   <headless>false</headless>
   <implicitTimeout>60</implicitTimeout>
   <explicitTimeout>30</explicitTimeout>
+  <pageLoadTimeout>30</pageLoadTimeout>
 </configuration>
