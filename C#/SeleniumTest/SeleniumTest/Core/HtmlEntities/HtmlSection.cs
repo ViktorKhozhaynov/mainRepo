@@ -66,70 +66,85 @@ namespace SeleniumTest.Core
             }
         }
 
-        public Boolean IsPresent()
+        public Boolean IsPresent
         {
-            try
+            get
             {
-                using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                try
                 {
-                    var testWebElement = WebElement;
-                    return true;
+                    using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                    {
+                        var testWebElement = WebElement;
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Warn($"IsPresent: The element hasn't been found by '{by.ToString()}' locator in the DOM!");
+                    return false;
                 }
             }
-            catch (Exception ex)
+        }
+
+        public Boolean IsAbsent
+        {
+            get
             {
-                log.Warn($"IsPresent: The element hasn't been found by '{by.ToString()}' locator in the DOM!");
+                try
+                {
+                    using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                    {
+                        int numberOfElements = _webElement != null
+                            ? _webElement.FindElements(by).Count
+                            : _webDriver.FindElements(by).Count;
+
+                        return numberOfElements == 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error($"IsAbsent: Error has occurred during an attempt to get the element! Message: {ex.Message}");
+                }
                 return false;
             }
         }
 
-        public Boolean IsAbsent()
+        public Boolean IsDisplayed
         {
-            try
+            get
             {
-                using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                try
                 {
-                    int numberOfElements = _webElement != null
-                        ? _webElement.FindElements(by).Count
-                        : _webDriver.FindElements(by).Count;
-
-                    return numberOfElements == 0;
+                    using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                    {
+                        return WebElement.Displayed;
+                    }
                 }
-            } catch (Exception ex)
-            {
-                log.Error($"IsAbsent: Error has occurred during an attempt to get the element! Message: {ex.Message}");
+                catch (NoSuchElementException ex)
+                {
+                    log.Error($"IsDisplayed: Error has occurred during an attempt to get the element! Message: {ex.Message}");
+                }
+                return false;
             }
-            return false;
         }
 
-        public Boolean IsDisplayed()
+        public Boolean IsHidden
         {
-            try
+            get
             {
-                using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                try
                 {
-                    return WebElement.Displayed;
+                    using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                    {
+                        return !WebElement.Displayed;
+                    }
                 }
-            } catch (NoSuchElementException ex)
-            {
-                log.Error($"IsDisplayed: Error has occurred during an attempt to get the element! Message: {ex.Message}");
-            }
-            return false;
-        }
-
-        public Boolean IsHidden()
-        {
-            try
-            {
-                using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                catch (NoSuchElementException ex)
                 {
-                    return !WebElement.Displayed;
+                    log.Error($"IsHidden: Error has occurred during an attempt to get the element! Message: {ex.Message}");
                 }
-            } catch (NoSuchElementException ex)
-            {
-                log.Error($"IsHidden: Error has occurred during an attempt to get the element! Message: {ex.Message}");
+                return false;
             }
-            return false;
         }
     }
 }

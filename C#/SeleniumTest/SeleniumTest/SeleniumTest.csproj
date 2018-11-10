@@ -64,11 +64,22 @@
     <Compile Include="Core\HtmlEntities\HtmlElement.cs" />
     <Compile Include="Core\HtmlEntities\HtmlHoverableElement.cs" />
     <Compile Include="Core\HtmlEntities\HtmlImageElement.cs" />
+    <Compile Include="Core\HtmlEntities\HtmlLinkElement.cs" />
     <Compile Include="Core\HtmlEntities\HtmlSection.cs" />
+    <Compile Include="Core\PageEntities\OverlayBase.cs" />
     <Compile Include="Core\PageEntities\PageBase.cs" />
+    <Compile Include="Core\TestEntities\DriverBase.cs" />
     <Compile Include="Core\TestEntities\TestBase.cs" />
     <Compile Include="Core\TestEntities\TestCaseMethods.cs" />
     <Compile Include="Core\TestEntities\TestStepMethods.cs" />
+    <Compile Include="PageObject\Yandex\MainPage\HeaderMenu.cs" />
+    <Compile Include="PageObject\Yandex\MainPage.cs" />
+    <Compile Include="PageObject\Yandex\MainPage\MainOverlay.cs" />
+    <Compile Include="PageObject\Yandex\MainPage\MainOverlay\CallCenterPlaceholderSection.cs" />
+    <Compile Include="PageObject\Yandex\MainPage\MainOverlay\CityPromoSection.cs" />
+    <Compile Include="PageObject\Yandex\MainPage\MainOverlay\OrderSection.cs" />
+    <Compile Include="PageObject\Yandex\MainPage\MapSection.cs" />
+    <Compile Include="PageObject\Yandex\MainPage\ServiceMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\YandexTests.cs" />
   </ItemGroup>
@@ -83,7 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
-    <Folder Include="PageObject\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

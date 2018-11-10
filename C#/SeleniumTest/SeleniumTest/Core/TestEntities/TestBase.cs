@@ -2,38 +2,17 @@
 using log4net.Config;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumTest.PageObject;
 using System;
 
 namespace SeleniumTest.Core
 {
     [TestFixture]
-    public class TestBase
+    public class TestBase : DriverBase
     {
-        protected ILog logger;
-        protected Configuration config;
-        protected IWebDriver WebDriver;
-
-        [OneTimeSetUp]
-        protected void InitializeFixture()
-        {
-            XmlConfigurator.Configure();
-            logger = LogManager.GetLogger(GetType().Name);
-
-            config = Configuration.GetInstance();
-        }
+        private static int explicitTimeout = int.Parse(config.GetValue("explicitTimeout"));
         
-        [SetUp]
-        protected void Initialize()
-        {
-            WebDriver = DriverFactory.GetDriver(config.GetDriverType);
-        }
-
-        [TearDown]
-        protected void TearDown()
-        {
-            WebDriver.Quit();
-        }
-
         protected void TestCase(string description, Action testBody)
         {
             TestCaseMethods.TestCase(description, testBody);
@@ -42,6 +21,24 @@ namespace SeleniumTest.Core
         protected void TestStep(string description, Action testBody)
         {
             TestStepMethods.TestStep(description, testBody);
-        }        
+        }
+
+        #region methods
+
+        public void NavigateToUrl(string url) => WebDriver.Navigate().GoToUrl(url);
+
+        public void waitUntil(Func<bool> condition) => new WebDriverWait(WebDriver, TimeSpan.FromSeconds(explicitTimeout)).Until((WebDriver) => condition.Invoke());
+        
+        public MainPage OpenMainPage()
+        {
+            NavigateToUrl(config.BaseUrl);
+
+            var mainPage = new MainPage(WebDriver, null);
+
+            waitUntil(() => mainPage.Header.Logo.IsDisplayed);
+
+            return mainPage;
+        }
+        #endregion
     }
 }

@@ -47,6 +47,8 @@ namespace SeleniumTest.Core
 
         public string GetValue(string key) => config.SelectNodes($"./{key}")[0].InnerText;
 
-        public DriverType GetDriverType => (DriverType) Enum.Parse(typeof(DriverType), GetValue("driverType"));
+        public DriverType DriverType => (DriverType) Enum.Parse(typeof(DriverType), GetValue("driverType"));
+
+        public string BaseUrl => GetValue("basePortalUrl");
     }
 }
