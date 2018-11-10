@@ -19,7 +19,7 @@ namespace SeleniumTest.Core
             {
                 try
                 {
-                    using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                    using (new CustomImplicitTimeout(WebDriver, quickSearchTimeout))
                     {
                         return WebElement.GetAttribute("src");
                     }

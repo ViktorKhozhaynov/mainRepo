@@ -26,5 +26,12 @@ namespace SeleniumTest.Core
         }
 
         public List<string> ElementsText => Elements.Select(x => x.Text).ToList();
+
+        #region methods
+
+        public void CLickElementByIndex(int index) => Elements[index].Click();
+
+        public void ClickElementByText(int text) => Elements.Find(x => x.Text.Equals(text)).Click();
+        #endregion
     }
 }

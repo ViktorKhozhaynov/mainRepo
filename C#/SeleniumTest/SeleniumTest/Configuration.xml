@@ -5,6 +5,7 @@
   <driverType>Chrome</driverType>
   <basePortalUrl>https://taxi.yandex.ru/#index</basePortalUrl>
   <headless>false</headless>
+  <quickSearchTimeout>2</quickSearchTimeout>
   <implicitTimeout>60</implicitTimeout>
   <explicitTimeout>30</explicitTimeout>
   <pageLoadTimeout>30</pageLoadTimeout>

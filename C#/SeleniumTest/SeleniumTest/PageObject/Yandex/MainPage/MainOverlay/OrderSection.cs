@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SeleniumTest.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,12 +48,49 @@ namespace SeleniumTest.PageObject
 
         public HtmlElement RatesSurge => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__surge"));
 
-        public HtmlElement ApproximateCost => new HtmlElement(WebElement, By.CssSelector("div.routestats span.text"));
+        public HtmlElement PreliminaryCost => new HtmlElement(WebElement, By.CssSelector("div.routestats .routestats__price"));
 
         public HtmlButtonElement DemoButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_action_demo"));
 
         public HtmlButtonElement OrderButton => new HtmlButtonElement(WebElement, By.CssSelector("button.js-order-button"));
+               
+        #region methods
 
-        
+        public void SelectSample(int index)
+        {
+            var firstSample = FromInputBlock.InputSamples.Elements[index];
+
+            waitUntil(() => firstSample.IsDisplayed);
+            firstSample.Click();
+
+            waitUntil(() => FromInputBlock.Input.Text.Equals(firstSample.Text));
+        }
+
+        public int GetRateOptionCost(int index)
+        {
+            waitUntil(() => RatesOptions.Elements.All(x => x.IsDisplayed));
+            
+            var rawText = RatesOptions.ElementsText[index];
+            var from = rawText.LastIndexOf("от") + 3;
+            var to = rawText.LastIndexOf("Р");
+
+            return int.Parse(rawText.Substring(from, to - from));
+        }
+
+        public void ClickRatesButton()
+        {
+            waitUntil(() => RatesSelectButton.IsDisplayed);
+            RatesSelectButton.Click();
+            waitUntil(() => RatesOptions.Elements.All(x => x.IsDisplayed));
+        }
+
+        public void SelectRate(int index)
+        {
+            waitUntil(() => RatesOptions.Elements.All(x => x.IsDisplayed));
+            RatesOptions.CLickElementByIndex(index);
+
+            waitUntil(() => RatesOptions.Elements.All(x => x.IsHidden));
+        }
+        #endregion
     }
 }

@@ -1,13 +1,16 @@
 ﻿using log4net;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
+using OpenQA.Selenium.Support.UI;
 using System;
 
 namespace SeleniumTest.Core
 {
     public class HtmlSection
     {
-        protected readonly int QUICK_SEARCH_TIMEOUT = 2;
+        protected static Configuration config = Configuration.GetInstance();
+        protected static int explicitTimeout = int.Parse(config.GetValue("explicitTimeout"));
+        protected static int quickSearchTimeout = int.Parse(config.GetValue("quickSearchTimeout"));
         protected ILog log;
         private IWebDriver _webDriver;
         private IWebElement _webElement;
@@ -49,15 +52,15 @@ namespace SeleniumTest.Core
 
         public IWebDriver WebDriver => _webDriver != null ? _webDriver : ((IWrapsDriver)_webElement).WrappedDriver;
 
-        protected String InternalId => by != null ? by.ToString() : "by.xpath //";
+        protected string InternalId => by != null ? by.ToString() : "by.xpath //";
 
-        public String Text
+        public virtual string Text
         {
             get
             {
                 try
                 {
-                    using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                    using (new CustomImplicitTimeout(WebDriver, quickSearchTimeout))
                     {
                         return WebElement.Text;
                     }
@@ -68,15 +71,16 @@ namespace SeleniumTest.Core
                     return "";
                 }
             }
+            set { }
         }
 
-        public Boolean IsPresent
+        public bool IsPresent
         {
             get
             {
                 try
                 {
-                    using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                    using (new CustomImplicitTimeout(WebDriver, quickSearchTimeout))
                     {
                         var testWebElement = WebElement;
                         return true;
@@ -90,13 +94,13 @@ namespace SeleniumTest.Core
             }
         }
 
-        public Boolean IsAbsent
+        public bool IsAbsent
         {
             get
             {
                 try
                 {
-                    using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                    using (new CustomImplicitTimeout(WebDriver, quickSearchTimeout))
                     {
                         int numberOfElements = _webElement != null
                             ? _webElement.FindElements(by).Count
@@ -113,13 +117,13 @@ namespace SeleniumTest.Core
             }
         }
 
-        public Boolean IsDisplayed
+        public bool IsDisplayed
         {
             get
             {
                 try
                 {
-                    using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                    using (new CustomImplicitTimeout(WebDriver, quickSearchTimeout))
                     {
                         return WebElement.Displayed;
                     }
@@ -132,13 +136,13 @@ namespace SeleniumTest.Core
             }
         }
 
-        public Boolean IsHidden
+        public bool IsHidden
         {
             get
             {
                 try
                 {
-                    using (new CustomImplicitTimeout(WebDriver, QUICK_SEARCH_TIMEOUT))
+                    using (new CustomImplicitTimeout(WebDriver, quickSearchTimeout))
                     {
                         return !WebElement.Displayed;
                     }
@@ -150,5 +154,7 @@ namespace SeleniumTest.Core
                 return false;
             }
         }
+
+        public void waitUntil(Func<bool> condition) => new WebDriverWait(WebDriver, TimeSpan.FromSeconds(explicitTimeout)).Until((WebDriver) => condition.Invoke());
     }
 }

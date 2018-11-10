@@ -17,7 +17,7 @@ namespace SeleniumTest.PageObject
         {
         }
 
-        public HtmlInputElement FromInput => new HtmlInputElement(WebElement, By.CssSelector("input.input__control"));
+        public HtmlInputElement Input => new HtmlInputElement(WebElement, By.CssSelector("input.input__control"));
 
         public HtmlButtonElement ClearButton => new HtmlButtonElement(WebElement, By.CssSelector("input.input__clear"));
 
