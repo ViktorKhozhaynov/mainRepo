@@ -15,7 +15,7 @@ namespace SeleniumTest.PageObject
 
         public HtmlElement PhoneTextElement => new HtmlElement(WebElement, By.ClassName("callcenter-phone__text"));
 
-        public HtmlElement PhoneElement => new HtmlElement(WebElement, By.ClassName("callcenter-phone__text"));
+        public HtmlElement PhoneElement => new HtmlElement(WebElement, By.ClassName("locale__phone"));
 
         public string PhoneNumber => PhoneElement.Text;
 

@@ -21,8 +21,8 @@ namespace SeleniumTest.PageObject
 
         public HtmlElement PromoStarTextElement => new HtmlElement(WebElement, By.CssSelector("div.city-promo-details__text[data-html='model.priceText']"));
 
-        public HtmlLinkElement AndroidStoreLink => new HtmlLinkElement(WebElement, By.XPath("//a[contains(@class, 'link_js_inited')][div[contains(@class, 'stores__icon_type_android')]]"));
+        public HtmlLinkElement AndroidStoreLink => new HtmlLinkElement(WebElement, By.XPath(".//a[not(contains(@style,'display:none'))][div[contains(@class, 'stores__icon_type_android')]]"));
 
-        public HtmlLinkElement IosStoreLink => new HtmlLinkElement(WebElement, By.XPath("//a[contains(@class, 'link_js_inited')][div[contains(@class, 'stores__icon_type_ios')]]"));
+        public HtmlLinkElement IosStoreLink => new HtmlLinkElement(WebElement, By.XPath(".//a[not(contains(@style,'display:none'))][div[contains(@class, 'stores__icon_type_ios')]]"));
     }
 }
