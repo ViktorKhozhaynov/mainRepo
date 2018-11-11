@@ -86,7 +86,7 @@ namespace SeleniumTest.Core
                         return true;
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     log.Warn($"IsPresent: The element hasn't been found by '{by.ToString()}' locator in the DOM!");
                     return false;
@@ -155,6 +155,6 @@ namespace SeleniumTest.Core
             }
         }
 
-        public void waitUntil(Func<bool> condition) => new WebDriverWait(WebDriver, TimeSpan.FromSeconds(explicitTimeout)).Until((WebDriver) => condition.Invoke());
+        public void waitUntil(Func<IWebDriver, bool> condition) => new WebDriverWait(WebDriver, TimeSpan.FromSeconds(explicitTimeout)).Until((WebDriver) => condition.Invoke(WebDriver));
     }
 }

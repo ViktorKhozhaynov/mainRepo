@@ -22,15 +22,18 @@ namespace SeleniumTest.PageObject
 
         public HtmlButtonElement SwapButton => new HtmlButtonElement(WebElement, By.ClassName("geo-group__swap"));
 
-        public HtmlElementsList AutocompleteShortNames => new HtmlElementsList(WebDriver, By.CssSelector(".input__popup.popup li span.b-autocomplete-item__short-text"));
+        // Temporary solution, had to use last-of-type due to inability to distinguish two almost identical error containers in the DOM
+        public HtmlElement AddressValidationMessage => new HtmlElement(WebDriver, By.CssSelector("div.popup_type_error:last-of-type div.popup__content"));
+
+        public HtmlElement AutocompleteOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".input__popup.popup li span.b-autocomplete-item__short-text:nth-of-type({++index})"));
 
         public HtmlButtonElement DateTimeSelectButton => new HtmlButtonElement(WebDriver, By.Id("datetimeSelect"));
 
-        public HtmlElementsList DateTimeOptions => new HtmlElementsList(WebDriver, By.CssSelector(".popup_type_datetime li div.select__item span"));
+        public HtmlElement DateTimeOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".popup_type_datetime li div.select__item span:nth-of-type({++index})"));
 
         public HtmlButtonElement RequirementsSelectButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_preset_requirements"));
 
-        public HtmlElementsList RequirementsOptions => new HtmlElementsList(WebDriver, By.CssSelector(".popup_type_requirements div.requirements__item span.checkbox"));
+        public HtmlElement RequirementsOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".popup_type_requirements div.requirements__item span.checkbox:nth-of-type({++index})"));
 
         public HtmlInputElement PhoneNumberInput => new HtmlInputElement(WebDriver, By.Id("phoneNumber"));
 
@@ -42,11 +45,13 @@ namespace SeleniumTest.PageObject
 
         public HtmlButtonElement RatesSelectButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_size_service-level"));
 
-        public HtmlElementsList RatesOptions => new HtmlElementsList(WebDriver, By.CssSelector(".select__popup_size_service-level div.select__item"));
+        public HtmlElement RatesOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".select__popup_size_service-level div.select__item:nth-of-type({++index})"));
 
-        public HtmlElement RatesLoader => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__loader"));
+        public HtmlElement PreliminaryCostSurge => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__surge"));
 
-        public HtmlElement RatesSurge => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__surge"));
+        public HtmlElement PreliminaryCostLoader => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__loader"));
+
+        public HtmlElement PreliminaryCostHint => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__hint"));
 
         public HtmlElement PreliminaryCost => new HtmlElement(WebElement, By.CssSelector("div.routestats .routestats__price"));
 
@@ -56,21 +61,8 @@ namespace SeleniumTest.PageObject
                
         #region methods
 
-        public void SelectSample(int index)
+        public int GetRateOptionCost(string rawText)
         {
-            var firstSample = FromInputBlock.InputSamples.Elements[index];
-
-            waitUntil(() => firstSample.IsDisplayed);
-            firstSample.Click();
-
-            waitUntil(() => FromInputBlock.Input.Text.Equals(firstSample.Text));
-        }
-
-        public int GetRateOptionCost(int index)
-        {
-            waitUntil(() => RatesOptions.Elements.All(x => x.IsDisplayed));
-            
-            var rawText = RatesOptions.ElementsText[index];
             var from = rawText.LastIndexOf("от") + 3;
             var to = rawText.LastIndexOf("Р");
 
@@ -79,17 +71,18 @@ namespace SeleniumTest.PageObject
 
         public void ClickRatesButton()
         {
-            waitUntil(() => RatesSelectButton.IsDisplayed);
+            waitUntil(x => RatesSelectButton.IsDisplayed);
             RatesSelectButton.Click();
-            waitUntil(() => RatesOptions.Elements.All(x => x.IsDisplayed));
+            waitUntil(x => RatesOption(0).IsDisplayed);
         }
 
         public void SelectRate(int index)
         {
-            waitUntil(() => RatesOptions.Elements.All(x => x.IsDisplayed));
-            RatesOptions.CLickElementByIndex(index);
+            waitUntil(x => RatesOption(index).IsDisplayed);
+            RatesOption(index).Click();
 
-            waitUntil(() => RatesOptions.Elements.All(x => x.IsHidden));
+            waitUntil(x => RatesOption(index).IsHidden);
+            waitUntil(x => PreliminaryCost.IsDisplayed);
         }
         #endregion
     }
