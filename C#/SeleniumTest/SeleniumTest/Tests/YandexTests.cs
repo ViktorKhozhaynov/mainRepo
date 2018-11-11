@@ -236,9 +236,10 @@ namespace SeleniumTest.Tests
             });
         }
 
+        // This test was used to debug and train
         [Test]
         [Category("Smoke")]
-        public void SmokeTest()
+        public void UC0_SmokeTest()
         {
             TestCase("Smoke test for the main page of yandex taxi portal", () =>
             {
