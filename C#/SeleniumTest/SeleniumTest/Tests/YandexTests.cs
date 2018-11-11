@@ -23,7 +23,7 @@ namespace SeleniumTest.Tests
             TestCase("UC1 Validate click on sample affects appropriate address input", () =>
             {
                 var OrderSection = MainPage.MainOverlay.OrderSection;
-                string sampleAddress = string.Empty;
+                var sampleAddress = string.Empty;
 
                 TestStep("Click on one of the samples below the From address input", () =>
                 {
@@ -62,7 +62,7 @@ namespace SeleniumTest.Tests
             TestCase("UC2 Validate swap works when one address input filled in only", () =>
             {
                 var OrderSection = MainPage.MainOverlay.OrderSection;
-                string sampleAddress = string.Empty;
+                var sampleAddress = string.Empty;
 
                 TestStep("Click on one of the samples below the From address input", () =>
                 {
@@ -78,6 +78,41 @@ namespace SeleniumTest.Tests
                     {
                         Assert.AreEqual(string.Empty, OrderSection.FromInputBlock.Input.Text, "Swap button hasn't changed 'From' input value");
                         Assert.AreEqual(sampleAddress, OrderSection.ToInputBlock.Input.Text, "Swap button hasn't changed 'To' input value");
+                    });
+                });
+            });
+        }
+
+        [Test]
+        [Category("Smoke")]
+        public void UC3_SwapBothAddressInputsTest()
+        {
+            TestCase("UC3 Validate swap works when both address inputs filled in", () =>
+            {
+                var OrderSection = MainPage.MainOverlay.OrderSection;
+                var fromSampleAddress = string.Empty;
+                var toSampleAddress = string.Empty;
+
+                TestStep("Click on one of the samples below the From address input", () =>
+                {
+                    fromSampleAddress = OrderSection.FromInputBlock.SelectSample(SampleType.Left);
+                    Assert.AreEqual(fromSampleAddress, OrderSection.FromInputBlock.Input.Text, "'From' input text hasn't been changed!");
+                });
+
+                TestStep("Click on one of the samples below the To address input", () =>
+                {
+                    toSampleAddress = OrderSection.ToInputBlock.SelectSample(SampleType.Left);
+                    Assert.AreEqual(toSampleAddress, OrderSection.ToInputBlock.Input.Text, "'To' input text hasn't been changed!");
+                });
+
+                TestStep("Click on swap button and validate that it swaps 'From' and 'To' inputs' values", () =>
+                {
+                    OrderSection.SwapButton.Click();
+
+                    Assert.Multiple(() =>
+                    {
+                        Assert.AreEqual(toSampleAddress, OrderSection.FromInputBlock.Input.Text, "Swap button hasn't changed 'From' input value");
+                        Assert.AreEqual(fromSampleAddress, OrderSection.ToInputBlock.Input.Text, "Swap button hasn't changed 'To' input value");
                     });
                 });
             });

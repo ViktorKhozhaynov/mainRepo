@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumTest.PageObject;
 using System;
+using System.IO;
 
 namespace SeleniumTest.Core
 {
@@ -13,6 +14,17 @@ namespace SeleniumTest.Core
     {
         private static int explicitTimeout = int.Parse(config.GetValue("explicitTimeout"));
         private static int quickPageLoadTimeout = int.Parse(config.GetValue("quickPageLoadTimeout"));
+        private string testReportDirectory;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            testReportDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, this.GetType().Name, TestContext.CurrentContext.Test.Name);
+
+            if (!Directory.Exists(testReportDirectory))
+                Directory.CreateDirectory(testReportDirectory);
+        }
 
         protected void TestCase(string description, Action testBody)
         {
@@ -21,7 +33,18 @@ namespace SeleniumTest.Core
 
         protected void TestStep(string description, Action testBody)
         {
-            TestStepMethods.TestStep(description, testBody);
+            var currentTestName = string.Empty;
+
+            try
+            {
+                TestStepMethods.TestStep(description, testBody, out string methodName);
+
+                currentTestName = methodName;
+            }
+            catch (Exception)
+            {
+                TakeScreenshot(Path.Combine(testReportDirectory, $"failed-on--{DateTime.Now.ToString("HH-MM-ss")}.jpeg"));
+            }
         }
 
         #region methods
@@ -30,9 +53,12 @@ namespace SeleniumTest.Core
 
         public void waitUntil(Func<IWebDriver, bool> condition) => new WebDriverWait(WebDriver, TimeSpan.FromSeconds(explicitTimeout)).Until((WebDriver) => condition.Invoke(WebDriver));
 
-        public object ExecuteScript(string script)
+        public object ExecuteScript(string script) => ((IJavaScriptExecutor)WebDriver).ExecuteScript("return document.readyState");
+
+        public void TakeScreenshot(string filename)
         {
-            return ((IJavaScriptExecutor)WebDriver).ExecuteScript("return document.readyState");
+            Screenshot screenshot = ((ITakesScreenshot)WebDriver).GetScreenshot();
+            screenshot.SaveAsFile(filename, ScreenshotImageFormat.Jpeg);
         }
 
         public MainPage OpenMainPage()
