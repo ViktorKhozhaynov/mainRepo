@@ -120,6 +120,42 @@ namespace SeleniumTest.Tests
 
         [Test]
         [Category("Smoke")]
+        public void UC4_AddressValidationMessageTest()
+        {
+            TestCase("UC4 Validate appropriate message is shown when invalid address is filled in into one of inputs", () =>
+            {
+                var OrderSection = MainPage.MainOverlay.OrderSection;
+                var invalidAddress = "In5AL1D4Dre$$";
+                var validationMessageText = "Ничего не найдено. Пожалуйста, уточните адрес.";
+
+                TestStep("Type invalid address into From address input", () =>
+                {
+                    OrderSection.FromInputBlock.Input.Text = invalidAddress;
+                    OrderSection.OrderButton.Click();
+                    
+                    waitUntil(x => OrderSection.AddressValidationMessage.IsDisplayed);
+                    Assert.AreEqual(validationMessageText, OrderSection.AddressValidationMessage.Text, "Error mesage text mismatch!");
+                });
+
+                TestStep("Click on clear button for From input", () =>
+                {
+                    OrderSection.FromInputBlock.ClearInput();
+                    waitUntil(x => OrderSection.AddressValidationMessage.IsHidden);
+                });
+
+                TestStep("Type invalid address into To address input", () =>
+                {
+                    OrderSection.ToInputBlock.Input.Text = invalidAddress;
+                    OrderSection.OrderButton.Click();
+
+                    waitUntil(x => OrderSection.AddressValidationMessage.IsDisplayed);
+                    Assert.AreEqual(validationMessageText, OrderSection.AddressValidationMessage.Text, "Error mesage text mismatch!");
+                });
+            });
+        }
+
+        [Test]
+        [Category("Smoke")]
         public void SmokeTest()
         {   
             TestCase("Smoke test for the main page of yandex taxi portal", () =>

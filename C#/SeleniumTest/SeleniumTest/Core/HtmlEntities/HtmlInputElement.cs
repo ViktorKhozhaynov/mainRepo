@@ -34,6 +34,8 @@ namespace SeleniumTest.Core
             {
                 try
                 {
+                    WebElement.Clear();
+                    WebElement.SendKeys(string.Empty);
                     WebElement.SendKeys(value);
                 }
                 catch (Exception ex)

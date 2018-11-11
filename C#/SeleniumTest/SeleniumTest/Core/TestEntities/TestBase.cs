@@ -41,9 +41,11 @@ namespace SeleniumTest.Core
 
                 currentTestName = methodName;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 TakeScreenshot(Path.Combine(testReportDirectory, $"failed-on--{DateTime.Now.ToString("HH-MM-ss")}.jpeg"));
+
+                throw ex;
             }
         }
 

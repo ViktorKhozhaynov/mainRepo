@@ -19,7 +19,9 @@ namespace SeleniumTest.PageObject
 
         public HtmlInputElement Input => new HtmlInputElement(WebElement, By.CssSelector("input.input__control"));
 
-        public HtmlButtonElement ClearButton => new HtmlButtonElement(WebElement, By.CssSelector("input.input__clear"));
+        public HtmlElement Spinner => new HtmlElement(WebElement, By.CssSelector("div.spinner"));
+
+        public HtmlButtonElement ClearButton => new HtmlButtonElement(WebElement, By.CssSelector("span.input__clear"));
 
         public HtmlButtonElement LocationButton => new HtmlButtonElement(WebElement, By.CssSelector("input.input__location"));
 
@@ -40,6 +42,14 @@ namespace SeleniumTest.PageObject
             sample.Click();
 
             return sampleText;
+        }
+
+        public void ClearInput()
+        {
+            waitUntil(x => ClearButton.IsDisplayed);
+
+            ClearButton.Click();
+            waitUntil(x => Input.Text.Equals(string.Empty));
         }
         #endregion
     }
