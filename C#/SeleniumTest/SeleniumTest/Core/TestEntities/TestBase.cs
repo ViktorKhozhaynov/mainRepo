@@ -12,7 +12,8 @@ namespace SeleniumTest.Core
     public class TestBase : DriverBase
     {
         private static int explicitTimeout = int.Parse(config.GetValue("explicitTimeout"));
-        
+        private static int quickPageLoadTimeout = int.Parse(config.GetValue("quickPageLoadTimeout"));
+
         protected void TestCase(string description, Action testBody)
         {
             TestCaseMethods.TestCase(description, testBody);
@@ -27,23 +28,30 @@ namespace SeleniumTest.Core
 
         public void NavigateToUrl(string url) => WebDriver.Navigate().GoToUrl(url);
 
-        public void waitUntil(Func<bool> condition) => new WebDriverWait(WebDriver, TimeSpan.FromSeconds(explicitTimeout)).Until((WebDriver) => condition.Invoke());
-        
+        public void waitUntil(Func<IWebDriver, bool> condition) => new WebDriverWait(WebDriver, TimeSpan.FromSeconds(explicitTimeout)).Until((WebDriver) => condition.Invoke(WebDriver));
+
+        public object ExecuteScript(string script)
+        {
+            return ((IJavaScriptExecutor)WebDriver).ExecuteScript("return document.readyState");
+        }
+
         public MainPage OpenMainPage()
         {
-            using (new CustomPageLoadTimeout(WebDriver, 5))
-                try
-                {
-                    log.Info("Main page has started loading. Waiting for 5 sec and proceed regardless of the result!");
-                    NavigateToUrl(config.BaseUrl);
-                } catch (WebDriverTimeoutException)
-                {
-                    log.Warn("Main page hasn't been loaded fully. Proceed with caution!");
-                }
+            try
+            {
+                log.Info("Main page has started loading. Waiting for 5 sec and proceed regardless of the result!");
+                NavigateToUrl(config.BaseUrl);
+            }
+            catch (WebDriverTimeoutException)
+            {
+                log.Warn("Main page hasn't been loaded fully. Proceed with caution!");
+            }
 
             var mainPage = new MainPage(WebDriver, null);
 
-            waitUntil(() => mainPage.Header.Logo.IsDisplayed);
+            waitUntil(x => ExecuteScript("return document.readyState").Equals("complete"));
+            waitUntil(x => mainPage.Header.Logo.IsDisplayed);
+            waitUntil(x => mainPage.MainOverlay.IsDisplayed);
 
             return mainPage;
         }

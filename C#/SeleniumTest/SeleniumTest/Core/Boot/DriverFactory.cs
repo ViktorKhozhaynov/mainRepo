@@ -27,7 +27,10 @@ namespace SeleniumTest.Core
                     return new InternetExplorerDriver();
 
                 case DriverType.Chrome:
-                    return new ChromeDriver(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Drivers"));  
+                    ChromeOptions options = new ChromeOptions();
+                    options.AddArguments("--disable-notifications");
+
+                    return new ChromeDriver(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Drivers"), options);  
             }
             return null;
         }

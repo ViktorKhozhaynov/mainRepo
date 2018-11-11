@@ -22,6 +22,7 @@ namespace SeleniumTest.Core
             {
                 log.Info($"Error: '{description}'. Elapsed {stopwatch.Elapsed.Milliseconds} ms");
                 log.Error($"Error message: {ex.Message}");
+                log.Debug($"Stack trace: {ex.StackTrace}");
 
                 throw ex;
             }
