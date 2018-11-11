@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Threading;
 
 namespace SeleniumTest.Core
 {
@@ -174,5 +175,8 @@ namespace SeleniumTest.Core
         }
 
         public void waitUntil(Func<IWebDriver, bool> condition) => new WebDriverWait(WebDriver, TimeSpan.FromSeconds(explicitTimeout)).Until((WebDriver) => condition.Invoke(WebDriver));
+        
+        // Do not use this unless there's no other way around!!!
+        public void Sleep(int milliseconds) => Thread.Sleep(milliseconds);
     }
 }
