@@ -5,11 +5,11 @@ namespace SeleniumTest.Core
 {
     public class HtmlInputElement : HtmlElement
     {
-        public HtmlInputElement(IWebDriver webDriver, By by) : base(webDriver, by)
+        public HtmlInputElement(IWebDriver webDriver, By by, HtmlSection parent) : base(webDriver, by, parent)
         {
         }
 
-        public HtmlInputElement(IWebElement webElement, By by) : base(webElement, by)
+        public HtmlInputElement(IWebElement webElement, By by, HtmlSection parent) : base(webElement, by, parent)
         {
         }
 

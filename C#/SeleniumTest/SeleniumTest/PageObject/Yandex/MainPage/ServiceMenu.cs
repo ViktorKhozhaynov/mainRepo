@@ -10,11 +10,11 @@ namespace SeleniumTest.PageObject
 {
     public class ServiceMenu : HtmlSection
     {
-        public ServiceMenu(IWebDriver webDriver, By by) : base(webDriver, by)
+        public ServiceMenu(IWebDriver webDriver, By by, HtmlSection parent) : base(webDriver, by, parent)
         {
         }
 
-        public ServiceMenu(IWebElement webElement, By by) : base(webElement, by)
+        public ServiceMenu(IWebElement webElement, By by, HtmlSection parent) : base(webElement, by, parent)
         {
         }
     }

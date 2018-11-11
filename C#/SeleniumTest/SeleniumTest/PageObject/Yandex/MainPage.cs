@@ -9,12 +9,12 @@ namespace SeleniumTest.PageObject
         {
         }
 
-        public HeaderMenu Header => new HeaderMenu(webDriver, By.Id("header"));
+        public HeaderMenu Header => new HeaderMenu(webDriver, By.Id("header"), null);
 
-        public ServiceMenu ServiceMenu => new ServiceMenu(webDriver, By.ClassName("service-menu"));
+        public ServiceMenu ServiceMenu => new ServiceMenu(webDriver, By.ClassName("service-menu"), null);
 
-        public MapSection Map => new MapSection(webDriver, By.Id("maps"));
+        public MapSection Map => new MapSection(webDriver, By.Id("maps"), null);
 
-        public MainOverlay MainOverlay => new MainOverlay(webDriver, By.CssSelector("div[role='main'] div.layout__col:not(.js-placeholder)"));
+        public MainOverlay MainOverlay => new MainOverlay(webDriver, By.CssSelector("div[role='main'] div.layout__col:not(.js-placeholder)"), null);
     }
 }

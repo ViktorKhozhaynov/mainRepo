@@ -9,11 +9,11 @@ namespace SeleniumTest.Core
 {
     public class OverlayBase : HtmlSection
     {
-        public OverlayBase(IWebDriver webDriver, By by) : base(webDriver, by)
+        public OverlayBase(IWebDriver webDriver, By by, HtmlSection parent) : base(webDriver, by, parent)
         {
         }
 
-        public OverlayBase(IWebElement webElement, By by) : base(webElement, by)
+        public OverlayBase(IWebElement webElement, By by, HtmlSection parent) : base(webElement, by, parent)
         {
         }
     }

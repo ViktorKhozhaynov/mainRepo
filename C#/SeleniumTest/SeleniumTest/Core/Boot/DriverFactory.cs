@@ -29,7 +29,7 @@ namespace SeleniumTest.Core
                 case DriverType.Chrome:
                     ChromeOptions options = new ChromeOptions();
                     options.AddArguments("--disable-notifications");
-                    options.AddArguments("--kiosk");
+                    options.AddArguments("--start-maximized");
 
                     return new ChromeDriver(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Drivers"), options);  
             }

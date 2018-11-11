@@ -5,11 +5,11 @@ namespace SeleniumTest.Core
 {
     public class HtmlHoverableElement : HtmlElement
     {
-        public HtmlHoverableElement(IWebDriver webDriver, By by) : base(webDriver, by)
+        public HtmlHoverableElement(IWebDriver webDriver, By by, HtmlSection parent) : base(webDriver, by, parent)
         {
         }
 
-        public HtmlHoverableElement(IWebElement webElement, By by) : base(webElement, by)
+        public HtmlHoverableElement(IWebElement webElement, By by, HtmlSection parent) : base(webElement, by, parent)
         {
         }
 
