@@ -51,6 +51,8 @@ namespace SeleniumTest.PageObject
 
         public HtmlElement PreliminaryCostLoader => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__loader"), this);
 
+        public HtmlElement PreliminaryCostSpinner => new HtmlElement(WebElement, By.CssSelector("div.routestats div.spinner"), this);
+
         public HtmlElement PreliminaryCostHint => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__hint"), this);
 
         public HtmlElement PreliminaryCost => new HtmlElement(WebElement, By.CssSelector("div.routestats .routestats__price"), this);
@@ -58,8 +60,25 @@ namespace SeleniumTest.PageObject
         public HtmlButtonElement DemoButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_action_demo"), this);
 
         public HtmlButtonElement OrderButton => new HtmlButtonElement(WebElement, By.CssSelector("button.js-order-button"), this);
-               
+
+        public bool IsCostCalculated
+        {
+            get
+            {
+                Sleep(500);
+                return OrderButton.IsDisplayed && PreliminaryCostLoader.IsHidden && PreliminaryCostSpinner.IsHidden && PreliminaryCost.Text.Contains("Стоимость поездки");
+            }
+        }
+
         #region methods
+
+        public int GetPreliminaryCost()
+        {
+            var from = PreliminaryCost.Text.LastIndexOf("—") + 2;
+            var to = PreliminaryCost.Text.LastIndexOf("Р");
+
+            return int.Parse(PreliminaryCost.Text.Substring(from, to - from));
+        }
 
         public int GetRateOptionCost(string rawText)
         {

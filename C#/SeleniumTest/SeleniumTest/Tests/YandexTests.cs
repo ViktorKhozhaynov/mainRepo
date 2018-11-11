@@ -8,12 +8,14 @@ namespace SeleniumTest.Tests
     [TestFixture]
     public class YandexTests : TestBase
     {
-        private MainPage MainPage;
+        private MainPage MainPage { get; set; }
+        private OrderSection OrderSection { get; set; }
 
         protected override void Initialize()
         {
             base.Initialize();
             MainPage = OpenMainPage();
+            OrderSection = MainPage.MainOverlay.OrderSection;
         }
 
         [Test]
@@ -22,7 +24,6 @@ namespace SeleniumTest.Tests
         {
             TestCase("UC1 Validate click on sample affects appropriate address input", () =>
             {
-                var OrderSection = MainPage.MainOverlay.OrderSection;
                 var sampleAddress = string.Empty;
 
                 TestStep("Click on one of the samples below the From address input", () =>
@@ -61,7 +62,6 @@ namespace SeleniumTest.Tests
         {
             TestCase("UC2 Validate swap works when one address input filled in only", () =>
             {
-                var OrderSection = MainPage.MainOverlay.OrderSection;
                 var sampleAddress = string.Empty;
 
                 TestStep("Click on one of the samples below the From address input", () =>
@@ -89,7 +89,6 @@ namespace SeleniumTest.Tests
         {
             TestCase("UC3 Validate swap works when both address inputs filled in", () =>
             {
-                var OrderSection = MainPage.MainOverlay.OrderSection;
                 var fromSampleAddress = string.Empty;
                 var toSampleAddress = string.Empty;
 
@@ -124,7 +123,6 @@ namespace SeleniumTest.Tests
         {
             TestCase("UC4 Validate appropriate message is shown when invalid address is filled in into one of inputs", () =>
             {
-                var OrderSection = MainPage.MainOverlay.OrderSection;
                 var invalidAddress = "In5AL1D4Dre$$";
                 var validationMessageText = "Ничего не найдено. Пожалуйста, уточните адрес.";
 
@@ -160,7 +158,6 @@ namespace SeleniumTest.Tests
         {
             TestCase("UC5 Validate auttocomplete dropdown is shown when address is partially filled in", () =>
             {
-                var OrderSection = MainPage.MainOverlay.OrderSection;
                 var partialAddress = "Пролет";
                 var crossLanguagePartialAddress = "Ghjktn";
                 var firstOptionShortName = string.Empty;
@@ -207,38 +204,40 @@ namespace SeleniumTest.Tests
         public void UC9_RequirementsAffectOnCostTest()
         {
             TestCase("UC9 Validate choosing one of requirements affects preliminary cost ", () =>
-            {
-                var OrderSection = MainPage.MainOverlay.OrderSection;
+            {                
                 var requirementsOptionText = "Перевозка животного";
                 var requirementsButtonExpectedText = "Требования1";
-                var expectedPreliminaryCost = "Стоимость поездки — 249 Р";
+                int expectedPreliminaryCost = 0;
+                int requirementCost = 150;
 
                 // Different way of populating the fields is used to trigger cost recalculation
                 TestStep("Fill From and To address inputs with the same address", () =>
                 {
                     OrderSection.FromInputBlock.SelectSample(SampleType.Left);
                     OrderSection.SwapButton.Click();
-                    OrderSection.FromInputBlock.SelectSample(SampleType.Left);
+                    OrderSection.FromInputBlock.SelectSample(SampleType.Left);                    
+                });
+
+                TestStep("Calculate expected cost", () =>
+                {
+                    waitUntil(x => OrderSection.IsCostCalculated);
+                    expectedPreliminaryCost = OrderSection.GetPreliminaryCost() + requirementCost;
                 });
 
                 TestStep("Select 'Перевозка животного' in the Requirements dropdown. Validate that preliminary cost has increased", () =>
                 {
                     OrderSection.OpenRequirementsDropdown();
                     OrderSection.RequirementsOption(requirementsOptionText).Click();
-                    waitUntil(x => OrderSection.PreliminaryCost.Text.Contains("Стоимость поездки"));
 
-                     Assert.Multiple(() =>
-                    {
-                        Assert.AreEqual(requirementsButtonExpectedText, OrderSection.RequirementsSelectButton.Text, "Requirements button hasn't changed it's state after selecting an option!");
-                        Assert.AreEqual(expectedPreliminaryCost, OrderSection.PreliminaryCost.Text);
-                    });
+                    waitUntil(x => OrderSection.IsCostCalculated);
+                    waitUntil(x => OrderSection.GetPreliminaryCost().Equals(expectedPreliminaryCost));
+                    Assert.AreEqual(requirementsButtonExpectedText, OrderSection.RequirementsSelectButton.Text, "Requirements button hasn't changed it's state after selecting an option!");                    
                 });
             });
         }
 
-        // This test was used to debug and train
         [Test]
-        [Category("Smoke")]
+        [Ignore("This test was used to debug and train")]
         public void UC0_SmokeTest()
         {
             TestCase("Smoke test for the main page of yandex taxi portal", () =>

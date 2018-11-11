@@ -37,6 +37,9 @@ namespace SeleniumTest.PageObject
             waitUntil(x => sample.IsDisplayed);
             sample.Click();
 
+            waitUntil(x => ClearButton.IsDisplayed);
+            waitUntil(x => Input.Text.Equals(sampleText));
+
             return sampleText;
         }
 
