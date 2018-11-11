@@ -1,0 +1,4 @@
+To execute YandexTests: 
+1) Restore nuget packages
+2) Go to nunit console folder 
+3) execute run " nunit3-console ../../../SeleniumTest/bin/Debug/SeleniumTest.dll "
