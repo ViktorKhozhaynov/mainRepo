@@ -5,15 +5,15 @@ namespace SeleniumTest.Core
 {
     public class HtmlElement : HtmlSection
     {
-        public HtmlElement(IWebDriver webDriver, By by) : base(webDriver, by)
+        public HtmlElement(IWebDriver webDriver, By by, HtmlSection parent) : base(webDriver, by, parent)
         {
         }
 
-        public HtmlElement(IWebElement webElement, By by) : base(webElement, by)
+        public HtmlElement(IWebElement webElement, By by, HtmlSection parent) : base(webElement, by, parent)
         {
         }
 
-        public HtmlElement(IWebElement webElement) : base(webElement)
+        public HtmlElement(IWebElement webElement, HtmlSection parent) : base(webElement, parent)
         {
         }
 

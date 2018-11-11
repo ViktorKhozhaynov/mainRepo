@@ -1,64 +1,61 @@
 ﻿using OpenQA.Selenium;
 using SeleniumTest.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SeleniumTest.PageObject
 {
     public class OrderSection : HtmlSection
     {
-        public OrderSection(IWebDriver webDriver, By by) : base(webDriver, by)
+        public OrderSection(IWebDriver webDriver, By by, HtmlSection parent) : base(webDriver, by, parent)
         {
         }
 
-        public OrderSection(IWebElement webElement, By by) : base(webElement, by)
+        public OrderSection(IWebElement webElement, By by, HtmlSection parent) : base(webElement, by, parent)
         {
         }
 
-        public AddressInputBlock FromInputBlock => new AddressInputBlock(WebElement, By.CssSelector("span.input_direction_from"));
+        public AddressInputBlock FromInputBlock => new AddressInputBlock(WebElement, By.CssSelector("span.input_direction_from"), this);
 
-        public AddressInputBlock ToInputBlock => new AddressInputBlock(WebElement, By.CssSelector("span.input_direction_to"));
+        public AddressInputBlock ToInputBlock => new AddressInputBlock(WebElement, By.CssSelector("span.input_direction_to"), this);
 
-        public HtmlButtonElement SwapButton => new HtmlButtonElement(WebElement, By.ClassName("geo-group__swap"));
-
-        // Temporary solution, had to use last-of-type due to inability to distinguish two almost identical error containers in the DOM
-        public HtmlElement AddressValidationMessage => new HtmlElement(WebDriver, By.CssSelector("div.popup_type_error:last-of-type div.popup__content"));
+        public HtmlButtonElement SwapButton => new HtmlButtonElement(WebElement, By.ClassName("geo-group__swap"), this);
 
         // Temporary solution, had to use last-of-type due to inability to distinguish two almost identical error containers in the DOM
-        public AutocompleteOption AutocompleteOption(int index) => new AutocompleteOption(WebDriver, By.CssSelector($".input__popup:last-of-type li.b-autocomplete-item:nth-of-type({++index})"));
+        public HtmlElement AddressValidationMessage => new HtmlElement(WebDriver, By.CssSelector("div.popup_type_error:last-of-type div.popup__content"), this);
 
-        public HtmlButtonElement DateTimeSelectButton => new HtmlButtonElement(WebDriver, By.Id("datetimeSelect"));
+        // Temporary solution, had to use last-of-type due to inability to distinguish two almost identical error containers in the DOM
+        public AutocompleteOption AutocompleteOption(int index) => new AutocompleteOption(WebDriver, By.CssSelector($".input__popup:last-of-type li.b-autocomplete-item:nth-of-type({++index})"), this);
 
-        public HtmlElement DateTimeOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".popup_type_datetime li div.select__item span:nth-of-type({++index})"));
+        public HtmlButtonElement DateTimeSelectButton => new HtmlButtonElement(WebDriver, By.Id("datetimeSelect"), this);
 
-        public HtmlButtonElement RequirementsSelectButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_preset_requirements"));
+        public HtmlElement DateTimeOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".popup_type_datetime li div.select__item span:nth-of-type({++index})"), this);
 
-        public HtmlElement RequirementsOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".popup_type_requirements div.requirements__item span.checkbox:nth-of-type({++index})"));
+        public HtmlButtonElement RequirementsSelectButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_preset_requirements"), this);
 
-        public HtmlInputElement PhoneNumberInput => new HtmlInputElement(WebDriver, By.Id("phoneNumber"));
+        public HtmlElement RequirementsOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".popup_type_requirements div.requirements__item span.checkbox:nth-of-type({++index})"), this);
 
-        public HtmlButtonElement RatesInfoButton => new HtmlButtonElement(WebElement, By.CssSelector("label.api-mrt__button"));
+        public HtmlInputElement PhoneNumberInput => new HtmlInputElement(WebDriver, By.Id("phoneNumber"), this);
 
-        public HtmlButtonElement CommentsButton => new HtmlButtonElement(WebElement, By.CssSelector("label.api-comments__button"));
+        public HtmlButtonElement RatesInfoButton => new HtmlButtonElement(WebElement, By.CssSelector("label.api-mrt__button"), this);
 
-        public HtmlInputElement CommentsInputArea => new HtmlInputElement(WebElement, By.CssSelector("span.input_type_textarea textarea"));
+        public HtmlButtonElement CommentsButton => new HtmlButtonElement(WebElement, By.CssSelector("label.api-comments__button"), this);
 
-        public HtmlButtonElement RatesSelectButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_size_service-level"));
+        public HtmlInputElement CommentsInputArea => new HtmlInputElement(WebElement, By.CssSelector("span.input_type_textarea textarea"), this);
 
-        public HtmlElement RatesOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".select__popup_size_service-level div.select__item:nth-of-type({++index})"));
+        public HtmlButtonElement RatesSelectButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_size_service-level"), this);
 
-        public HtmlElement PreliminaryCostSurge => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__surge"));
+        public HtmlElement RatesOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".select__popup_size_service-level div.select__item:nth-of-type({++index})"), this);
 
-        public HtmlElement PreliminaryCostLoader => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__loader"));
+        public HtmlElement PreliminaryCostSurge => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__surge"), this);
 
-        public HtmlElement PreliminaryCostHint => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__hint"));
+        public HtmlElement PreliminaryCostLoader => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__loader"), this);
 
-        public HtmlElement PreliminaryCost => new HtmlElement(WebElement, By.CssSelector("div.routestats .routestats__price"));
+        public HtmlElement PreliminaryCostHint => new HtmlElement(WebElement, By.CssSelector("div.routestats div.routestats__hint"), this);
 
-        public HtmlButtonElement DemoButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_action_demo"));
+        public HtmlElement PreliminaryCost => new HtmlElement(WebElement, By.CssSelector("div.routestats .routestats__price"), this);
 
-        public HtmlButtonElement OrderButton => new HtmlButtonElement(WebElement, By.CssSelector("button.js-order-button"));
+        public HtmlButtonElement DemoButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_action_demo"), this);
+
+        public HtmlButtonElement OrderButton => new HtmlButtonElement(WebElement, By.CssSelector("button.js-order-button"), this);
                
         #region methods
 

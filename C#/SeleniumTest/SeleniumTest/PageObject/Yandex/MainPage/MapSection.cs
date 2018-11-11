@@ -10,11 +10,11 @@ namespace SeleniumTest.PageObject
 {
     public class MapSection : HtmlSection
     {
-        public MapSection(IWebDriver webDriver, By by) : base(webDriver, by)
+        public MapSection(IWebDriver webDriver, By by, HtmlSection parent) : base(webDriver, by, parent)
         {
         }
 
-        public MapSection(IWebElement webElement, By by) : base(webElement, by)
+        public MapSection(IWebElement webElement, By by, HtmlSection parent) : base(webElement, by, parent)
         {
         }
     }

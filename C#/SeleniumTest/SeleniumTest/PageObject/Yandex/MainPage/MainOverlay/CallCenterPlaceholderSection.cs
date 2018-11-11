@@ -5,17 +5,17 @@ namespace SeleniumTest.PageObject
 {
     public class CallCenterPlaceholderSection : HtmlSection
     {
-        public CallCenterPlaceholderSection(IWebDriver webDriver, By by) : base(webDriver, by)
+        public CallCenterPlaceholderSection(IWebDriver webDriver, By by, HtmlSection parent) : base(webDriver, by, parent)
         {
         }
 
-        public CallCenterPlaceholderSection(IWebElement webElement, By by) : base(webElement, by)
+        public CallCenterPlaceholderSection(IWebElement webElement, By by, HtmlSection parent) : base(webElement, by, parent)
         {
         }
 
-        public HtmlElement PhoneTextElement => new HtmlElement(WebElement, By.ClassName("callcenter-phone__text"));
+        public HtmlElement PhoneTextElement => new HtmlElement(WebElement, By.ClassName("callcenter-phone__text"), this);
 
-        public HtmlElement PhoneElement => new HtmlElement(WebElement, By.ClassName("locale__phone"));
+        public HtmlElement PhoneElement => new HtmlElement(WebElement, By.ClassName("locale__phone"), this);
 
         public string PhoneNumber => PhoneElement.Text;
 

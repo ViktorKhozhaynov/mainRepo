@@ -5,11 +5,11 @@ namespace SeleniumTest.Core
 {
     public class HtmlImageElement : HtmlElement
     {
-        public HtmlImageElement(IWebDriver webDriver, By by) : base(webDriver, by)
+        public HtmlImageElement(IWebDriver webDriver, By by, HtmlSection parent) : base(webDriver, by, parent)
         {
         }
 
-        public HtmlImageElement(IWebElement webElement, By by) : base(webElement, by)
+        public HtmlImageElement(IWebElement webElement, By by, HtmlSection parent) : base(webElement, by, parent)
         {
         }
 

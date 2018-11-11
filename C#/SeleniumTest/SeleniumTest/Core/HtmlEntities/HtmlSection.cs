@@ -14,6 +14,7 @@ namespace SeleniumTest.Core
         protected ILog log;
         private IWebDriver _webDriver;
         private IWebElement _webElement;
+        private HtmlSection parent;
         private By by;
 
         private HtmlSection()
@@ -21,21 +22,24 @@ namespace SeleniumTest.Core
             log = LogManager.GetLogger(this.GetType());
         }
 
-        public HtmlSection(IWebDriver webDriver, By by) : this()
+        public HtmlSection(IWebDriver webDriver, By by, HtmlSection parent) : this()
         {
             this._webDriver = webDriver;
             this.by = by;
+            this.parent = parent;
         }
 
-        public HtmlSection(IWebElement webElement, By by) : this()
+        public HtmlSection(IWebElement webElement, By by, HtmlSection parent) : this()
         {
             this._webElement = webElement;
             this.by = by;
+            this.parent = parent;
         }
 
-        public HtmlSection(IWebElement webElement) : this()
+        public HtmlSection(IWebElement webElement, HtmlSection parent) : this()
         {
             this._webElement = webElement;
+            this.parent = parent;
         }
 
         public IWebElement WebElement
@@ -53,6 +57,8 @@ namespace SeleniumTest.Core
         public IWebDriver WebDriver => _webDriver != null ? _webDriver : ((IWrapsDriver)_webElement).WrappedDriver;
 
         protected string InternalId => by != null ? by.ToString() : "by.xpath //";
+
+        protected HtmlSection Parent => parent;
 
         public void Click()
         {

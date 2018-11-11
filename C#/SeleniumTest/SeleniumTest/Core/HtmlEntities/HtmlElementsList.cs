@@ -15,14 +15,14 @@ namespace SeleniumTest.Core
             log = LogManager.GetLogger(this.GetType());
         }
 
-        public HtmlElementsList(IWebDriver webDriver, By by) : this()
+        public HtmlElementsList(IWebDriver webDriver, By by, HtmlSection parent) : this()
         {
-            Elements = webDriver.FindElements(by).Select(x => new HtmlElement(x)).ToList();
+            Elements = webDriver.FindElements(by).Select(x => new HtmlElement(x, parent)).ToList();
         }
 
-        public HtmlElementsList(IWebElement webElement, By by) : this()
+        public HtmlElementsList(IWebElement webElement, By by, HtmlSection parent) : this()
         {
-            Elements = webElement.FindElements(by).Select(x => new HtmlElement(x)).ToList();
+            Elements = webElement.FindElements(by).Select(x => new HtmlElement(x, parent)).ToList();
         }
 
         public List<string> ElementsText => Elements.Select(x => x.Text).ToList();
