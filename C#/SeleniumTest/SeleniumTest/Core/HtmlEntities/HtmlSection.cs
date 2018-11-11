@@ -54,6 +54,18 @@ namespace SeleniumTest.Core
 
         protected string InternalId => by != null ? by.ToString() : "by.xpath //";
 
+        public void Click()
+        {
+            try
+            {
+                WebElement.Click();
+            }
+            catch (Exception ex)
+            {
+                log.Error($"An error has occurred while clicking on the element! Message: {ex.Message}");
+            }
+        }
+
         public virtual string Text
         {
             get

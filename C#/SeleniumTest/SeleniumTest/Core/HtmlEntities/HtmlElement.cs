@@ -17,18 +17,6 @@ namespace SeleniumTest.Core
         {
         }
 
-        public String ExpectedText;
-
-        public void Click()
-        {
-            try
-            {
-                WebElement.Click();
-            }
-            catch (Exception ex)
-            {
-                log.Error($"An error has occurred while clicking on the element! Message: {ex.Message}");
-            }
-        }
+        public string ExpectedText;
     }
 }

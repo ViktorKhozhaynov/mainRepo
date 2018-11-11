@@ -82,6 +82,7 @@
     <Compile Include="PageObject\Yandex\MainPage\MainOverlay\CityPromoSection.cs" />
     <Compile Include="PageObject\Yandex\MainPage\MainOverlay\OrderSection.cs" />
     <Compile Include="PageObject\Yandex\MainPage\MainOverlay\OrderSection\AddressInputBlock.cs" />
+    <Compile Include="PageObject\Yandex\MainPage\MainOverlay\OrderSection\AutocompleteOption.cs" />
     <Compile Include="PageObject\Yandex\MainPage\MapSection.cs" />
     <Compile Include="PageObject\Yandex\MainPage\ServiceMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

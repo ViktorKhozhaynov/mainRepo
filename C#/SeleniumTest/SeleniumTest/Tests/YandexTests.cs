@@ -156,8 +156,62 @@ namespace SeleniumTest.Tests
 
         [Test]
         [Category("Smoke")]
+        public void UC5_AddressAutocompleteTest()
+        {
+            TestCase("UC5 Validate auttocomplete dropdown is shown when address is partially filled in", () =>
+            {
+                var OrderSection = MainPage.MainOverlay.OrderSection;
+                var partialAddress = "Пролет";
+                var crossLanguagePartialAddress = "Ghjktn";
+                var firstOptionShortName = string.Empty;
+
+                TestStep("Type invalid address into From address input", () =>
+                {
+                    OrderSection.FromInputBlock.Input.Text = partialAddress;
+                    waitUntil(x => OrderSection.AutocompleteOption(0).IsDisplayed);
+
+                    firstOptionShortName = OrderSection.AutocompleteOption(0).ShortText;
+                });
+
+                TestStep("Type invalid address into From address input", () =>
+                {
+                    OrderSection.AutocompleteOption(0).Click();
+
+                    Assert.AreEqual(firstOptionShortName, OrderSection.FromInputBlock.Input.Text, "From input hasn't been populated with expected autocomplete option!");
+                });
+
+                TestStep("Click on clear button for From input", () =>
+                {
+                    OrderSection.FromInputBlock.ClearInput();
+                });
+
+                TestStep("Type invalid address into From address input", () =>
+                {
+                    OrderSection.ToInputBlock.Input.Text = partialAddress;
+                    waitUntil(x => OrderSection.AutocompleteOption(0).IsDisplayed);
+
+                    firstOptionShortName = OrderSection.AutocompleteOption(0).ShortText;
+                });
+
+                TestStep("Click on clear button for To input", () =>
+                {
+                    OrderSection.ToInputBlock.ClearInput();
+                });
+
+                TestStep("Type invalid address into From address input", () =>
+                {
+                    OrderSection.FromInputBlock.Input.Text = crossLanguagePartialAddress;
+                    waitUntil(x => OrderSection.AutocompleteOption(0).IsDisplayed);
+
+                    Assert.AreEqual(firstOptionShortName, OrderSection.AutocompleteOption(0).ShortText, "Cross language autocomplete has given different result!");
+                });
+            });
+        }
+
+        [Test]
+        [Category("Smoke")]
         public void SmokeTest()
-        {   
+        {
             TestCase("Smoke test for the main page of yandex taxi portal", () =>
             {
                 var OrderSection = MainPage.MainOverlay.OrderSection;

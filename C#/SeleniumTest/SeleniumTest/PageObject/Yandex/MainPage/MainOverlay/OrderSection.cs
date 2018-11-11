@@ -25,7 +25,8 @@ namespace SeleniumTest.PageObject
         // Temporary solution, had to use last-of-type due to inability to distinguish two almost identical error containers in the DOM
         public HtmlElement AddressValidationMessage => new HtmlElement(WebDriver, By.CssSelector("div.popup_type_error:last-of-type div.popup__content"));
 
-        public HtmlElement AutocompleteOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".input__popup.popup li span.b-autocomplete-item__short-text:nth-of-type({++index})"));
+        // Temporary solution, had to use last-of-type due to inability to distinguish two almost identical error containers in the DOM
+        public AutocompleteOption AutocompleteOption(int index) => new AutocompleteOption(WebDriver, By.CssSelector($".input__popup:last-of-type li.b-autocomplete-item:nth-of-type({++index})"));
 
         public HtmlButtonElement DateTimeSelectButton => new HtmlButtonElement(WebDriver, By.Id("datetimeSelect"));
 
