@@ -165,13 +165,13 @@ namespace SeleniumTest.Tests
                 var crossLanguagePartialAddress = "Ghjktn";
                 var firstOptionShortName = string.Empty;
 
-                TestStep("Type invalid address into From address input", () =>
+                TestStep("Type some part of address that's known to be real to From input", () =>
                 {
                     OrderSection.FromInputBlock.OpenAddressAutocompleteList(partialAddress);
                     firstOptionShortName = OrderSection.AutocompleteOption(0).ShortText;
                 });
 
-                TestStep("Type invalid address into From address input", () =>
+                TestStep("Click on first option. Validate the input", () =>
                 {
                     OrderSection.AutocompleteOption(0).Click();
                     Assert.AreEqual(firstOptionShortName, OrderSection.FromInputBlock.Input.Text, "From input hasn't been populated with expected autocomplete option!");
@@ -179,14 +179,14 @@ namespace SeleniumTest.Tests
 
                 TestStep("Click on clear button for From input", () => OrderSection.FromInputBlock.ClearInput());
 
-                TestStep("Type invalid address into From address input", () =>
+                TestStep("Type some part of address that's known to be real to To input", () =>
                 {
                     OrderSection.ToInputBlock.OpenAddressAutocompleteList(partialAddress);
                     firstOptionShortName = OrderSection.AutocompleteOption(0).ShortText;
                 });
 
                 // Additional step, hasn't been mentioned in the cases
-                TestStep("Type invalid address into To address input", () =>
+                TestStep("Click on first option Validate the input", () =>
                 {
                     OrderSection.AutocompleteOption(0).Click();
                     Assert.AreEqual(firstOptionShortName, OrderSection.ToInputBlock.Input.Text, "From input hasn't been populated with expected autocomplete option!");
@@ -194,7 +194,7 @@ namespace SeleniumTest.Tests
 
                 TestStep("Click on clear button for To input", () => OrderSection.ToInputBlock.ClearInput());
 
-                TestStep("Type invalid address into From address input", () =>
+                TestStep("Change language layout to English. Type some part of Russian address that's known to be real", () =>
                 {
                     OrderSection.FromInputBlock.OpenAddressAutocompleteList(crossLanguagePartialAddress);
                     Assert.AreEqual(firstOptionShortName, OrderSection.AutocompleteOption(0).ShortText, "Cross language autocomplete has given different result!");
@@ -209,24 +209,30 @@ namespace SeleniumTest.Tests
             TestCase("UC9 Validate choosing one of requirements affects preliminary cost ", () =>
             {
                 var OrderSection = MainPage.MainOverlay.OrderSection;
-                var testAddress = "Пролетарский проспект, 13";
-                var firstOptionShortName = string.Empty;
+                var requirementsOptionText = "Перевозка животного";
+                var requirementsButtonExpectedText = "Требования1";
+                var expectedPreliminaryCost = "Стоимость поездки — 249 Р";
 
-                TestStep("Type invalid address into From address input", () =>
-                { 
-                    OrderSection.FromInputBlock.Input.Text = testAddress;
-                    OrderSection.ToInputBlock.Input.Text = testAddress;
-                });
-
-                TestStep("Type invalid address into From address input", () =>
+                // Different way of populating the fields is used to trigger cost recalculation
+                TestStep("Fill From and To address inputs with the same address", () =>
                 {
-
-                    OrderSection.RequirementsOption(3).Click();
-
-                    Assert.AreEqual(firstOptionShortName, OrderSection.FromInputBlock.Input.Text, "From input hasn't been populated with expected autocomplete option!");
+                    OrderSection.FromInputBlock.SelectSample(SampleType.Left);
+                    OrderSection.SwapButton.Click();
+                    OrderSection.FromInputBlock.SelectSample(SampleType.Left);
                 });
 
-                TestStep("Click on clear button for From input", () => OrderSection.FromInputBlock.ClearInput());
+                TestStep("Select 'Перевозка животного' in the Requirements dropdown. Validate that preliminary cost has increased", () =>
+                {
+                    OrderSection.OpenRequirementsDropdown();
+                    OrderSection.RequirementsOption(requirementsOptionText).Click();
+                    waitUntil(x => OrderSection.PreliminaryCost.Text.Contains("Стоимость поездки"));
+
+                     Assert.Multiple(() =>
+                    {
+                        Assert.AreEqual(requirementsButtonExpectedText, OrderSection.RequirementsSelectButton.Text, "Requirements button hasn't changed it's state after selecting an option!");
+                        Assert.AreEqual(expectedPreliminaryCost, OrderSection.PreliminaryCost.Text);
+                    });
+                });
             });
         }
 

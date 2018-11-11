@@ -27,11 +27,13 @@ namespace SeleniumTest.PageObject
 
         public HtmlButtonElement DateTimeSelectButton => new HtmlButtonElement(WebDriver, By.Id("datetimeSelect"), this);
 
-        public HtmlElement DateTimeOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".popup_type_datetime li div.select__item span:nth-of-type({++index})"), this);
+        public HtmlElement DateTimeOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".popup_type_datetime li:nth-of-type({++index}) div.select__item span"), this);
 
         public HtmlButtonElement RequirementsSelectButton => new HtmlButtonElement(WebElement, By.CssSelector("button.button_preset_requirements"), this);
 
-        public HtmlElement RequirementsOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".popup_type_requirements div.requirements__item span.checkbox:nth-of-type({++index})"), this);
+        public HtmlElement RequirementsOption(int index) => new HtmlElement(WebDriver, By.CssSelector($".popup_type_requirements div.requirements__item:nth-of-type({++index}) span.checkbox"), this);
+
+        public HtmlElement RequirementsOption(string text) => new HtmlElement(WebDriver, By.XPath($"//*[contains(@class, 'popup_type_requirements')]//div[contains(@class, 'requirements__item')]//label[contains(@class, 'checkbox__label') and contains(text(), '{text}')]"), this);
 
         public HtmlInputElement PhoneNumberInput => new HtmlInputElement(WebDriver, By.Id("phoneNumber"), this);
 
@@ -81,6 +83,12 @@ namespace SeleniumTest.PageObject
 
             waitUntil(x => RatesOption(index).IsHidden);
             waitUntil(x => PreliminaryCost.IsDisplayed);
+        }
+
+        public void OpenRequirementsDropdown()
+        {
+            RequirementsSelectButton.Click();
+            waitUntil(x => RequirementsOption(0).IsDisplayed);
         }
         #endregion
     }
