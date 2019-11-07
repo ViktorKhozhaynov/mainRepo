@@ -39,7 +39,7 @@ To be able to run the test several things have to be done first:
     sudo pip3 install virtualenv
 
 2) Create virtualenv and switch to editor. It's possible to create it either with Pycharm or:
-    virtualenv venv
+    virtualenv venv --python=/usr/bin/python3.7
     source venv/bin/activate
 
 3) Install dependencies:
