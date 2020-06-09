@@ -19,7 +19,7 @@ To be able to run the tests locally several things have to be done first:
 
 ### HOW TO RUN THE TESTS
 Finally the tests can be executed with:
-    
+
     pytest --browser=['chrome', 'firefox'] --headless=True --remote=True
 where:
  - browser argument ChromeDriver is used by default / optional
