@@ -9,8 +9,6 @@ services:
       HUB_HOST: hub
     logging:
       driver: none
-    ports:
-      - "5558:5555"
     networks:
       - autotests
 
@@ -23,8 +21,6 @@ services:
       HUB_HOST: selenium_hub
     logging:
       driver: none
-    ports:
-      - "5556:5555"
     networks:
       - autotests
 
@@ -38,6 +34,26 @@ services:
     networks:
       - autotests
 
+  autotests:
+    depends_on:
+      - chrome
+      - hub
+      - firefox
+    container_name: selenium_autotests
+    build: .
+    environment:
+      - SELENIUM_HUB_HOST=selenium_hub
+    ports:
+      - "4446:8000"
+    networks:
+      - autotests
+    command:
+      - /bin/sh
+      - -c
+      - |
+        pytest --headless=True --remote=True --alluredir=allure/results
+        allure generate -o allure/report allure/results
+        allure open allure/report -p 8000
 
 networks:
   autotests:
