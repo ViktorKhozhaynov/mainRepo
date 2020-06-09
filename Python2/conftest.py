@@ -31,8 +31,8 @@ def pytest_configure(config: Config):
 
     check.min_python_version(config.inicfg.get('python_ver'))
 
-    setup.working_dir(config.rootdir)
     setup.pre_commit_hooks()
+    setup.working_dir(config.rootdir)
     setup.logging_levels()
 
 
