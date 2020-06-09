@@ -27,10 +27,15 @@ where:
  - remote argument sets remote execution / optional
 
 ### DOCKER COMPOSE
-Sets up:
- - selenium hub
- - firefox and chrome nodes
- - auto-tests project
+Alternatively tests can be executed via docker-compose:
+- docker-compose up --build
+
+The command above does:
+ - instanciates selenium hub
+ - instanciates firefox and chrome nodes
+ - builds auto-tests project
+ - runs 'pytest --headless=True --remote=True --alluredir=allure/results'
+ - creates allure report and hosts it on localhost:4446
 
  After everything is ready auto tests is executed and allure report is generated
 
